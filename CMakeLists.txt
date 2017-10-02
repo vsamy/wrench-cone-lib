@@ -6,7 +6,8 @@ include(Package_Definition NO_POLICY_SCOPE)
 PROJECT(wrench-cone-lib)
 
 declare_PID_Package(	AUTHOR 		vsamy
-			YEAR 		2017 
+			 ADDRESS git@github.com:vsamy/wrench-cone-lib.git
+	 YEAR 		2017 
 			LICENSE 	CeCILL-C
 			DESCRIPTION 	TODO: input a short description of package wrench-cone-lib utility here
 		)
