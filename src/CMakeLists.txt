@@ -1,18 +1,18 @@
 declare_PID_Component(
     SHARED_LIB
-    NAME wrench-cone-lib
+    NAME WrenchConeLib
     DIRECTORY WrenchConeLib
     CXX_STANDARD 14
 )
 
 declare_PID_Component_Dependency(
-    COMPONENT wrench-cone-lib
+    COMPONENT WrenchConeLib
     EXPORT EXTERNAL eigen
     INCLUDE_DIRS <eigen>/include
 )
 
 declare_PID_Component_Dependency(
-    COMPONENT wrench-cone-lib
+    COMPONENT WrenchConeLib
     EXPORT NATIVE eigen-cdd
     PACKAGE eigen-cdd
 )
@@ -28,7 +28,7 @@ if(GEN_PYTHON_BINDINGS AND "${CMAKE_BUILD_TYPE}" STREQUAL "Release")
 
     declare_PID_Component_Dependency(
         COMPONENT pyWrenchConeLib
-        EXPORT NATIVE wrench-cone-lib
+        EXPORT NATIVE WrenchConeLib
         PACKAGE wrench-cone-lib
     )
 

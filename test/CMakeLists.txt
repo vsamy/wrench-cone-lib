@@ -7,7 +7,7 @@ declare_PID_Component(
 
 declare_PID_Component_Dependency(
     COMPONENT TestWrenchConeLib
-    NATIVE wrench-cone-lib
+    NATIVE WrenchConeLib
 )
 
 declare_PID_Component_Dependency(
