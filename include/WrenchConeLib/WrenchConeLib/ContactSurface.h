@@ -44,7 +44,7 @@ struct ContactSurface {
  * \param nrGenerators number of generators to approximate the friction cone
  * \return A squared ContactSurface
  */
-ContactSurface squareSurfacePoints(double xHalfLength, double yHalfLength, const Eigen::Vector3d& r_0_s,
+ContactSurface rectangularSurface(double xHalfLength, double yHalfLength, const Eigen::Vector3d& r_0_s,
     const Eigen::Matrix3d& E_0_s, double mu = 0.7, unsigned int nrGenerators = 4);
 
 } // namespace wcl

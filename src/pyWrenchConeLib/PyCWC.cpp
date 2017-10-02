@@ -34,15 +34,15 @@ PyCWC::PyCWC(const np::ndarray& py_com, const py::list& py_pCSs)
 {
 }
 
-np::ndarray PyCWC::getPyCWCSpan()
+np::ndarray PyCWC::getPyRays()
 {
-    Eigen::MatrixXd G = getCWCSpan();
+    Eigen::MatrixXd G = getRays();
     return buildNumpyArray(G);
 }
 
-np::ndarray PyCWC::getPyCWCFace()
+np::ndarray PyCWC::getPyHalfSpaces()
 {
-    Eigen::MatrixXd G = CWC::getCWCFace();
+    Eigen::MatrixXd G = CWC::getHalfSpaces();
     return buildNumpyArray(G);
 }
 
@@ -80,8 +80,8 @@ void bindCWC()
 
     py::class_<PyCWC>("CWC", doc_PyCWC.c_str(), py::init<np::ndarray, PyContactSurface>())
         .def(py::init<np::ndarray, py::list>(doc_PyCWC2.c_str()))
-        .def("getCWCSpan", &PyCWC::getPyCWCSpan, doc_getCWCSpan.c_str())
-        .def("getCWCFace", &PyCWC::getPyCWCFace, doc_getCWCFace.c_str());
+        .def("getRays", &PyCWC::getPyRays, doc_getCWCSpan.c_str())
+        .def("getHalfSpaces", &PyCWC::getPyHalfSpaces, doc_getCWCFace.c_str());
 }
 
 } // namespace wcl

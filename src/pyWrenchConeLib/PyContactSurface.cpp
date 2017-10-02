@@ -38,7 +38,7 @@ PyContactSurface::PyContactSurface(const np::ndarray& py_r_0_s, const np::ndarra
     nrGenerators = py_nrGenerators;
 }
 
-PyContactSurface pySquareSurfacePoints(double py_xLength, double py_yLength, const np::ndarray& py_r_0_s,
+PyContactSurface pyRectangularSurface(double py_xLength, double py_yLength, const np::ndarray& py_r_0_s,
     const np::ndarray& py_E_0_s, double py_mu, unsigned int py_nrGenerators)
 {
     std::vector<Eigen::Vector3d> p;
@@ -53,13 +53,13 @@ PyContactSurface pySquareSurfacePoints(double py_xLength, double py_yLength, con
 }
 
 // Create wrappers
-PyContactSurface pySquareSurfacePoints0(double py_xHalfLength, double py_yHalfLength, const np::ndarray& py_r_0_s, const np::ndarray& py_E_0_s)
+PyContactSurface pyRectangularSurface0(double py_xHalfLength, double py_yHalfLength, const np::ndarray& py_r_0_s, const np::ndarray& py_E_0_s)
 {
-    return pySquareSurfacePoints(py_xHalfLength, py_yHalfLength, py_r_0_s, py_E_0_s);
+    return pyRectangularSurface(py_xHalfLength, py_yHalfLength, py_r_0_s, py_E_0_s);
 }
-PyContactSurface pySquareSurfacePoints1(double py_xHalfLength, double py_yHalfLength, const np::ndarray& py_r_0_s, const np::ndarray& py_E_0_s, double py_mu)
+PyContactSurface pyRectangularSurface1(double py_xHalfLength, double py_yHalfLength, const np::ndarray& py_r_0_s, const np::ndarray& py_E_0_s, double py_mu)
 {
-    return pySquareSurfacePoints(py_xHalfLength, py_yHalfLength, py_r_0_s, py_E_0_s, py_mu);
+    return pyRectangularSurface(py_xHalfLength, py_yHalfLength, py_r_0_s, py_E_0_s, py_mu);
 }
 
 void bindContactSurface()
@@ -73,16 +73,16 @@ void bindContactSurface()
                                        "\n\tnrGenerators: Number of generators to approximate the friction cone";
     std::string doc_mu = "Static friction coefficient of the surface";
     std::string doc_nrGenerators = "Number of generators to approximate the friction cone";
-    std::string doc_pySquareSurfacePoints0 = "Function that build a rectangular surface. "
-                                             "The z-axis of the surface is its normal. "
-                                             "The x-axis, y-axis and z-axis are defined with regard to the given rotation matrix E_0_s."
-                                             "\n\nparam:"
-                                             "\n\txHalfLength: The half-length of the surface on the x-axis"
-                                             "\n\tyHalfLength: The half-length of the surface on the y-axis"
-                                             "\n\tr_0_s: Position vector of the surface in the world coordinates"
-                                             "\n\tE_0_s: Rotation matrix of the surface from the world frame to the surface frame";
-    std::string doc_pySquareSurfacePoints1 = doc_pySquareSurfacePoints0 + "\n\tmu: Static friction coefficient of the surface";
-    std::string doc_pySquareSurfacePoints = doc_pySquareSurfacePoints1 + "\n\tnrGenerators: Number of generators to approximate the friction cone";
+    std::string doc_pyRectangularSurface0 = "Function that build a rectangular surface. "
+                                            "The z-axis of the surface is its normal. "
+                                            "The x-axis, y-axis and z-axis are defined with regard to the given rotation matrix E_0_s."
+                                            "\n\nparam:"
+                                            "\n\txHalfLength: The half-length of the surface on the x-axis"
+                                            "\n\tyHalfLength: The half-length of the surface on the y-axis"
+                                            "\n\tr_0_s: Position vector of the surface in the world coordinates"
+                                            "\n\tE_0_s: Rotation matrix of the surface from the world frame to the surface frame";
+    std::string doc_pyRectangularSurface1 = doc_pyRectangularSurface0 + "\n\tmu: Static friction coefficient of the surface";
+    std::string doc_pyRectangularSurface = doc_pyRectangularSurface1 + "\n\tnrGenerators: Number of generators to approximate the friction cone";
 
     py::class_<PyContactSurface>("ContactSurface", doc_PyContactSurface.c_str(),
         py::init<np::ndarray, np::ndarray, py::list, py::optional<double, unsigned int> >())
@@ -90,9 +90,9 @@ void bindContactSurface()
         .def_readwrite("nrGenerators", &PyContactSurface::nrGenerators, doc_nrGenerators.c_str());
 
     // BOOST_PYTHON_FUNCTION_OVERLOADS(pySquareSurfacePoints_overloads, pySquareSurfacePoints, 4, 6) // Do not work and i don't know why
-    py::def("squareSurfacePoints", pySquareSurfacePoints0, doc_pySquareSurfacePoints0.c_str());
-    py::def("squareSurfacePoints", pySquareSurfacePoints1, doc_pySquareSurfacePoints1.c_str());
-    py::def("squareSurfacePoints", pySquareSurfacePoints, doc_pySquareSurfacePoints.c_str());
+    py::def("rectangularSurface", pyRectangularSurface0, doc_pyRectangularSurface0.c_str());
+    py::def("rectangularSurface", pyRectangularSurface1, doc_pyRectangularSurface1.c_str());
+    py::def("rectangularSurface", pyRectangularSurface, doc_pyRectangularSurface.c_str());
 }
 
 } // namespace wcl

@@ -30,11 +30,11 @@ struct PyContactSurface : public ContactSurface {
         const py::list& py_point, double py_mu = 0.7, unsigned int py_nrGenerators = 4);
 };
 
-PyContactSurface pySquareSurfacePoints(double py_xHalfLength, double py_yHalfLength, const np::ndarray& py_r_0_s,
+PyContactSurface pyRectangularSurface(double py_xHalfLength, double py_yHalfLength, const np::ndarray& py_r_0_s,
     const np::ndarray& py_E_0_s, double py_mu = 0.7, unsigned int py_nrGenerators = 4);
-PyContactSurface pySquareSurfacePoints0(double py_xHalfLength, double py_yHalfLength, const np::ndarray& py_r_0_s, 
+PyContactSurface pyRectangularSurface0(double py_xHalfLength, double py_yHalfLength, const np::ndarray& py_r_0_s, 
     const np::ndarray& py_E_0_s);
-PyContactSurface pySquareSurfacePoints1(double py_xHalfLength, double py_yHalfLength, const np::ndarray& py_r_0_s, 
+PyContactSurface pyRectangularSurface1(double py_xHalfLength, double py_yHalfLength, const np::ndarray& py_r_0_s, 
     const np::ndarray& py_E_0_s, double py_mu);
     
 // Bind to python

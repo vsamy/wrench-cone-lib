@@ -30,8 +30,8 @@ struct PyCWC : public CWC {
     PyCWC(const np::ndarray& com, const PyContactSurface& py_pCS);
     PyCWC(const np::ndarray& com, const py::list& py_pCSs);
 
-    np::ndarray getPyCWCSpan();
-    np::ndarray getPyCWCFace();
+    np::ndarray getPyRays();
+    np::ndarray getPyHalfSpaces();
 
 private:
     np::ndarray buildNumpyArray(const Eigen::MatrixXd& mat);

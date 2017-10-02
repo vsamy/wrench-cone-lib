@@ -13,7 +13,7 @@
 #include <WrenchConeLib/CWC.h>
 #include <WrenchConeLib/ContactSurface.h>
 
-BOOST_AUTO_TEST_CASE(HUMANOID_FEET_SPAN)
+BOOST_AUTO_TEST_CASE(HUMANOID_FEET_RAYS)
 {
     using namespace std::chrono;
 
@@ -36,11 +36,11 @@ BOOST_AUTO_TEST_CASE(HUMANOID_FEET_SPAN)
         int nrg = 4;
 
         // Contact surface
-        auto cLf = wcl::squareSurfacePoints(0.11, 0.05, lf, E_0_lf, mu, nrg);
-        auto cRf = wcl::squareSurfacePoints(0.11, 0.05, rf, E_0_rf, mu, nrg);
+        auto cLf = wcl::rectangularSurface(0.11, 0.05, lf, E_0_lf, mu, nrg);
+        auto cRf = wcl::rectangularSurface(0.11, 0.05, rf, E_0_rf, mu, nrg);
 
         wcl::CWC cwc(com, { cLf, cRf });
-        auto spanMat = cwc.getCWCSpan();
+        auto spanMat = cwc.getRays();
 
         timings.push_back(duration_cast<microseconds>(high_resolution_clock::now() - initTimer).count());
     }
@@ -49,7 +49,7 @@ BOOST_AUTO_TEST_CASE(HUMANOID_FEET_SPAN)
     std::cout << "Best of 100: " << *std::min_element(timings.begin(), timings.end()) << "us" << std::endl;
 }
 
-BOOST_AUTO_TEST_CASE(HUMANOID_FEET_FACE)
+BOOST_AUTO_TEST_CASE(HUMANOID_FEET_HALFSPACES)
 {
     using namespace std::chrono;
 
@@ -72,11 +72,11 @@ BOOST_AUTO_TEST_CASE(HUMANOID_FEET_FACE)
         int nrg = 4;
 
         // Contact surface
-        auto cLf = wcl::squareSurfacePoints(0.11, 0.05, lf, E_0_lf, mu, nrg);
-        auto cRf = wcl::squareSurfacePoints(0.11, 0.05, rf, E_0_rf, mu, nrg);
+        auto cLf = wcl::rectangularSurface(0.11, 0.05, lf, E_0_lf, mu, nrg);
+        auto cRf = wcl::rectangularSurface(0.11, 0.05, rf, E_0_rf, mu, nrg);
 
         wcl::CWC cwc(com, { cLf, cRf });
-        auto spanMat = cwc.getCWCFace();
+        auto spanMat = cwc.getHalfSpaces();
 
         timings.push_back(duration_cast<microseconds>(high_resolution_clock::now() - initTimer).count());
     }

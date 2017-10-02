@@ -21,7 +21,7 @@
 
 namespace wcl {
 
-ContactSurface squareSurfacePoints(double xHalfLength, double yHalfLength, const Eigen::Vector3d& r_0_s, 
+ContactSurface rectangularSurface(double xHalfLength, double yHalfLength, const Eigen::Vector3d& r_0_s, 
     const Eigen::Matrix3d& E_0_s, double mu, unsigned int nrGenerators)
 {
     std::vector<Eigen::Vector3d> p;

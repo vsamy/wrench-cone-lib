@@ -1,13 +1,20 @@
-## Python users
+## Installation
 
 There is some more struggle in order to use the python bindings.
 Because python users are using numpy library to perform their computation, i wanted this lib to be able to handle numpy array as input.
 To do so i used boost python library.
 For now, PID does not provide proper handles for building boost python automatically, so here is the steps to do it cleanly.
 
-*Before anything else*, build the package once (See section Installation and Usage). This will download all necessary libraries. Then get to the boost python installation section.
+Clone [pid-workspace](https://github.com/vsamy/pid-workspace) if you don't have one yet.
 
-### Boost python installation
+Then 
+```bash
+cd <pid-workspace>/pid
+cmake ..
+make deploy package=wrench-cone-lib
+```
+
+### Python users
 
 Download boost python version 1.64.0 [boost_1_64_0.tar.gz](http://www.boost.org/users/history/version_1_64_0.html)
 then extract the files
@@ -26,6 +33,13 @@ Build and install the library in PID external packages
 ```
 
 Build the package one more time.
+
+```bash
+cd <pid-workspace>/packages/wrench-cone-lib/build
+git checkout integration
+make build
+```
+
 Add the path to your PYTHONPATH and you are done.
 
 ```bash

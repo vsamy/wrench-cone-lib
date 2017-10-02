@@ -40,7 +40,7 @@ CWC::CWC(const Eigen::Vector3d& com, const std::vector<ContactSurface>& cps)
 /* v-rep
      * 
      */
-Eigen::MatrixXd CWC::getCWCSpan()
+Eigen::MatrixXd CWC::getRays()
 {
     computeG();
     return G_;
@@ -49,7 +49,7 @@ Eigen::MatrixXd CWC::getCWCSpan()
 /* h-rep
      * 
      */
-Eigen::MatrixXd CWC::getCWCFace()
+Eigen::MatrixXd CWC::getHalfSpaces()
 {
     computeG();
     polyhedron_.hrep(G_.transpose(), Eigen::VectorXd::Zero(G_.cols()));
@@ -96,7 +96,7 @@ std::vector<Eigen::Vector3d> CWC::generateCone(const ContactSurface& cp)
     double step = (M_PI * 2.) / cp.nrGenerators;
 
     for (int i = 0; i < cp.nrGenerators; ++i) {
-        generators[i] = cp.E_0_s * Eigen::AngleAxisd(step * i, normal) * gen;
+        generators[i] = cp.E_0_s.transpose() * Eigen::AngleAxisd(step * i, normal) * gen;
     }
 
     return generators;

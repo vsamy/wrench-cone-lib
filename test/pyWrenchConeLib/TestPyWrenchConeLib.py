@@ -54,20 +54,20 @@ class TestPyWrenchConeLib(unittest.TestCase):
         a = wcl.ContactSurface(np.array([-1., -2., -3.]), np.identity(3), [np.zeros((3,))], 0.5, 2)
 
     def test_square_contact_surface(self):
-        b = wcl.squareSurfacePoints(0.3, 0.2, np.array([1., 2., 3.]), np.identity(3))
-        b = wcl.squareSurfacePoints(0.3, 0.2, np.array([1., 2., 3.]), np.identity(3), 0.5)
-        b = wcl.squareSurfacePoints(0.3, 0.2, np.array([1., 2., 3.]), np.identity(3), 0.5, 8)
+        b = wcl.rectangularSurface(0.3, 0.2, np.array([1., 2., 3.]), np.identity(3))
+        b = wcl.rectangularSurface(0.3, 0.2, np.array([1., 2., 3.]), np.identity(3), 0.5)
+        b = wcl.rectangularSurface(0.3, 0.2, np.array([1., 2., 3.]), np.identity(3), 0.5, 8)
 
     def test_cwc_1_surf(self):
         a = wcl.ContactSurface(np.array([-1., -2., -3.]), np.identity(3), [np.zeros((3,))])
         cwc = wcl.CWC(self.com, a)
 
     def test_contact_wrench_cone(self):
-        rf_surf = wcl.squareSurfacePoints(self.rf_xhl, self.rf_yhl, self.rf_pos, self.rf_rot, self.rf_mu)
-        lf_surf = wcl.squareSurfacePoints(self.lf_xhl, self.lf_yhl, self.lf_pos, self.lf_rot, self.lf_mu)
+        rf_surf = wcl.rectangularSurface(self.rf_xhl, self.rf_yhl, self.rf_pos, self.rf_rot, self.rf_mu)
+        lf_surf = wcl.rectangularSurface(self.lf_xhl, self.lf_yhl, self.lf_pos, self.lf_rot, self.lf_mu)
         cwc = wcl.CWC(self.com, [rf_surf, lf_surf])
-        cwc_span = cwc.getCWCSpan()
-        cwc_face = cwc.getCWCFace()
+        cwc_span = cwc.getRays()
+        cwc_face = cwc.getHalfSpaces()
 
     def test_bad_domain_errors(self):
         a = wcl.ContactSurface(np.array([-1., -2., -3.]), np.identity(3), [np.zeros((3,))])

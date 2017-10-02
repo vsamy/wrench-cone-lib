@@ -44,11 +44,11 @@ public:
     /** Retrieve the V-representation (vertexes and rays of the polyhedron) of the CWC
      * \return A matrix \f$G\f$ such that \f$G\lambda = w_g, \lambda \geq 0\f$ with \f$w_g\f$ the contact wrench cone.
      */
-    Eigen::MatrixXd getCWCSpan();
+    Eigen::MatrixXd getRays();
     /** Retrieve the H-representation (Half-space of the polyhedron) of the CWC
      * \return A matrix \f$G\f$ such that \f$Gw_g \leq 0\f$ with \f$w_g\f$ the contact wrench cone.
      */
-    Eigen::MatrixXd getCWCFace();
+    Eigen::MatrixXd getHalfSpaces();
 
 private:
     void resizeG();
