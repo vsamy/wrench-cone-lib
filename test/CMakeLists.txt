@@ -1,9 +1,20 @@
 
-#declare your tests here
-# declare_PID_Component			(TEST_APPLICATION 	NAME  <test unit 1>	DIRECTORY <A DIR>) 
-# declare_PID_Component			(TEST_APPLICATION 	NAME  <test unit 2>	DIRECTORY <ANOTHER DIR>) 
+declare_PID_Component(
+    TEST_APPLICATION
+    NAME  TestWrenchConeLib
+    DIRECTORY WrenchConeLib
+)
 
+declare_PID_Component_Dependency(
+    COMPONENT TestWrenchConeLib
+    NATIVE wrench-cone-lib
+)
 
-#run_PID_Test (NAME checking-xxx COMPONENT <test unit 1> ARGUMENTS ...)
-#run_PID_Test (NAME checking-xxx COMPONENT <test unit 2> ARGUMENTS ...)
+declare_PID_Component_Dependency(
+    COMPONENT TestWrenchConeLib
+    EXTERNAL  boost-utest
+    PACKAGE   boost
+)
 
+run_PID_Test(NAME test-TestWrenchConeLib COMPONENT TestWrenchConeLib)
+add_test(NAME test-TestPyWrenchConeLib COMMAND ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/pyWrenchConeLib/TestPyWrenchConeLib.py)
