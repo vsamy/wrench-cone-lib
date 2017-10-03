@@ -28,6 +28,13 @@ namespace wcl {
 struct PyContactSurface : public ContactSurface {
     PyContactSurface(const np::ndarray& py_r_0_s, const np::ndarray& py_E_0_s, 
         const py::list& py_point, double py_mu = 0.7, unsigned int py_nrGenerators = 4);
+
+    np::ndarray pyGetPos();
+    void pySetPos(const np::ndarray& py_r_0_s);
+    np::ndarray pyGetRot();
+    void pySetRot(const np::ndarray& py_E_0_s);
+    py::list pyGetPoints();
+    void pySetPoints(const py::list& py_points);
 };
 
 PyContactSurface pyRectangularSurface(double py_xHalfLength, double py_yHalfLength, const np::ndarray& py_r_0_s,

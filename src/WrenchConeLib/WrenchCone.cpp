@@ -1,4 +1,4 @@
-/*      File: CWC.cpp
+/*      File: WrenchCone.cpp
 *       This file is part of the program WrenchConeLib
 *       Program description : This library implements the Contact Wrench Cone as given [here](https://scaron.info/papers/journal/caron-tro-2016.pdf). It uses cdd for the polyhedron computation and Eigen for the matrix part. Python bindings are also available.
 *       Copyright (C) 2017 -  vsamy (LIRMM). All Right reserved.
@@ -16,21 +16,21 @@
 *       along with this software. If not, it can be found on the official website
 *       of the CeCILL licenses family (http://www.cecill.info/index.en.html).
 */
-#include "WrenchConeLib/CWC.h"
+#include "WrenchConeLib/WrenchCone.h"
 
 #include <Eigen/Geometry>
 #include <cmath>
 
 namespace wcl {
 
-CWC::CWC(const Eigen::Vector3d& com, const ContactSurface& cp)
+WrenchCone::WrenchCone(const Eigen::Vector3d& com, const ContactSurface& cp)
     : com_(com)
     , cp_({ cp })
 {
     resizeG();
 }
 
-CWC::CWC(const Eigen::Vector3d& com, const std::vector<ContactSurface>& cps)
+WrenchCone::WrenchCone(const Eigen::Vector3d& com, const std::vector<ContactSurface>& cps)
     : com_(com)
     , cp_(cps)
 {
@@ -40,7 +40,7 @@ CWC::CWC(const Eigen::Vector3d& com, const std::vector<ContactSurface>& cps)
 /* v-rep
      * 
      */
-Eigen::MatrixXd CWC::getRays()
+Eigen::MatrixXd WrenchCone::getRays()
 {
     computeG();
     return G_;
@@ -49,7 +49,7 @@ Eigen::MatrixXd CWC::getRays()
 /* h-rep
      * 
      */
-Eigen::MatrixXd CWC::getHalfSpaces()
+Eigen::MatrixXd WrenchCone::getHalfspaces()
 {
     computeG();
     polyhedron_.hrep(G_.transpose(), Eigen::VectorXd::Zero(G_.cols()));
@@ -60,7 +60,7 @@ Eigen::MatrixXd CWC::getHalfSpaces()
  * Private functions
  */
 
-void CWC::resizeG()
+void WrenchCone::resizeG()
 {
     Eigen::Index size(0);
     for (auto cp : cp_)
@@ -69,7 +69,7 @@ void CWC::resizeG()
     G_.resize(6, size);
 }
 
-void CWC::computeG()
+void WrenchCone::computeG()
 {
     Eigen::Index col(0);
     for (auto cp : cp_) {
@@ -85,7 +85,7 @@ void CWC::computeG()
     }
 }
 
-std::vector<Eigen::Vector3d> CWC::generateCone(const ContactSurface& cp)
+std::vector<Eigen::Vector3d> WrenchCone::generateCone(const ContactSurface& cp)
 {
     std::vector<Eigen::Vector3d> generators(cp.nrGenerators);
     Eigen::Vector3d normal(Eigen::Vector3d::UnitZ());
@@ -102,7 +102,7 @@ std::vector<Eigen::Vector3d> CWC::generateCone(const ContactSurface& cp)
     return generators;
 }
 
-Eigen::Matrix3d CWC::skewMatrix(const Eigen::Vector3d v)
+Eigen::Matrix3d WrenchCone::skewMatrix(const Eigen::Vector3d v)
 {
     Eigen::Matrix3d mat;
     mat << 0., -v(2), v(1),

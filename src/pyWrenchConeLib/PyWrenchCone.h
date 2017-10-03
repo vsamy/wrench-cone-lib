@@ -1,4 +1,4 @@
-/*      File: PyCWC.h
+/*      File: PyWrenchCone.h
 *       This file is part of the program WrenchConeLib
 *       Program description : This library implements the Contact Wrench Cone as given [here](https://scaron.info/papers/journal/caron-tro-2016.pdf). It uses cdd for the polyhedron computation and Eigen for the matrix part. Python bindings are also available.
 *       Copyright (C) 2017 -  vsamy (LIRMM). All Right reserved.
@@ -17,7 +17,7 @@
 *       of the CeCILL licenses family (http://www.cecill.info/index.en.html).
 */
 #include "PyContactSurface.h"
-#include <WrenchConeLib/CWC.h>
+#include <WrenchConeLib/WrenchCone.h>
 #include <boost/python/numpy.hpp>
 
 namespace py = boost::python;
@@ -25,18 +25,15 @@ namespace np = boost::python::numpy;
 
 namespace wcl {
 
-struct PyCWC : public CWC {
+struct PyWrenchCone : public WrenchCone {
 
-    PyCWC(const np::ndarray& com, const PyContactSurface& py_pCS);
-    PyCWC(const np::ndarray& com, const py::list& py_pCSs);
+    PyWrenchCone(const np::ndarray& com, const PyContactSurface& py_pCS);
+    PyWrenchCone(const np::ndarray& com, const py::list& py_pCSs);
 
-    np::ndarray getPyRays();
-    np::ndarray getPyHalfSpaces();
-
-private:
-    np::ndarray buildNumpyArray(const Eigen::MatrixXd& mat);
+    np::ndarray pyGetRays();
+    np::ndarray pyGetHalfspaces();
 };
 
-void bindCWC();
+void bindWrenchCone();
 
 } // namespace wcl

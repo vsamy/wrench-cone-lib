@@ -38,6 +38,39 @@ PyContactSurface::PyContactSurface(const np::ndarray& py_r_0_s, const np::ndarra
     nrGenerators = py_nrGenerators;
 }
 
+np::ndarray PyContactSurface::pyGetPos()
+{
+    return buildNumpyArray(r_0_s);
+}
+
+void PyContactSurface::pySetPos(const np::ndarray& py_r_0_s)
+{
+    r_0_s = extractV3d(py_r_0_s);
+}
+
+np::ndarray PyContactSurface::pyGetRot()
+{
+    return buildNumpyArray(E_0_s);
+}
+
+void PyContactSurface::pySetRot(const np::ndarray& py_E_0_s)
+{
+    E_0_s = extractM3d(py_E_0_s);
+}
+
+py::list PyContactSurface::pyGetPoints()
+{
+    py::list l;
+    for (const auto& p : points)
+        l.append(buildNumpyArray(p));
+    return l;
+}
+
+void PyContactSurface::pySetPoints(const py::list& py_points)
+{
+    points = extractPointsList(py_points);
+}
+
 PyContactSurface pyRectangularSurface(double py_xLength, double py_yLength, const np::ndarray& py_r_0_s,
     const np::ndarray& py_E_0_s, double py_mu, unsigned int py_nrGenerators)
 {
@@ -64,13 +97,13 @@ PyContactSurface pyRectangularSurface1(double py_xHalfLength, double py_yHalfLen
 
 void bindContactSurface()
 {
-    std::string doc_PyContactSurface = "Representation of a contact surface."
-                                       "\n\nparam:"
-                                       "\n\tr_0_s: Position vector of the surface in the world coordinates"
-                                       "\n\tE_0_s: Rotation matrix of the surface from the world frame to the surface frame"
-                                       "\n\tpoints: List of points belonging to the surface in the surface coordinates"
-                                       "\n\tmu: Static friction coefficient of the surface"
-                                       "\n\tnrGenerators: Number of generators to approximate the friction cone";
+    std::string doc_PyContactSurface = "Representation of a contact surface.";
+    std::string doc_PyContactSurfaceInit = "\n\nparam:"
+                                           "\n\tr_0_s: Position vector of the surface in the world coordinates"
+                                           "\n\tE_0_s: Rotation matrix of the surface from the world frame to the surface frame"
+                                           "\n\tpoints: List of points belonging to the surface in the surface coordinates"
+                                           "\n\tmu: Static friction coefficient of the surface"
+                                           "\n\tnrGenerators: Number of generators to approximate the friction cone";
     std::string doc_mu = "Static friction coefficient of the surface";
     std::string doc_nrGenerators = "Number of generators to approximate the friction cone";
     std::string doc_pyRectangularSurface0 = "Function that build a rectangular surface. "
@@ -83,16 +116,28 @@ void bindContactSurface()
                                             "\n\tE_0_s: Rotation matrix of the surface from the world frame to the surface frame";
     std::string doc_pyRectangularSurface1 = doc_pyRectangularSurface0 + "\n\tmu: Static friction coefficient of the surface";
     std::string doc_pyRectangularSurface = doc_pyRectangularSurface1 + "\n\tnrGenerators: Number of generators to approximate the friction cone";
+    std::string doc_pyGetPos = "Get the current position of the surface in the world coordinates";
+    std::string doc_pySetPos = "Set the current position of the surface in the world coordinates";
+    std::string doc_pyGetRot = "Get the current rotation of the surface in the world frame";
+    std::string doc_pySetRot = "Set the current rotation of the surface in the world frame";
+    std::string doc_pyGetPoints = "Get the current points of the surface in the surface frame";
+    std::string doc_pySetPoints = "Set the current points of the surface in the surface frame";
 
     py::class_<PyContactSurface>("ContactSurface", doc_PyContactSurface.c_str(),
-        py::init<np::ndarray, np::ndarray, py::list, py::optional<double, unsigned int> >())
+        py::init<np::ndarray, np::ndarray, py::list, py::optional<double, unsigned int> >(doc_PyContactSurfaceInit.c_str()))
         .def_readwrite("mu", &PyContactSurface::mu, doc_mu.c_str())
-        .def_readwrite("nrGenerators", &PyContactSurface::nrGenerators, doc_nrGenerators.c_str());
+        .def_readwrite("nr_generators", &PyContactSurface::nrGenerators, doc_nrGenerators.c_str())
+        .def("surface_position", &PyContactSurface::pyGetPos, doc_pyGetPos.c_str())
+        .def("surface_position", &PyContactSurface::pySetPos, doc_pySetPos.c_str())
+        .def("surface_rotation", &PyContactSurface::pyGetRot, doc_pyGetRot.c_str())
+        .def("surface_rotation", &PyContactSurface::pySetRot, doc_pySetRot.c_str())
+        .def("surface_points", &PyContactSurface::pyGetPoints, doc_pyGetPoints.c_str())
+        .def("surface_points", &PyContactSurface::pySetPoints, doc_pySetPoints.c_str());
 
     // BOOST_PYTHON_FUNCTION_OVERLOADS(pySquareSurfacePoints_overloads, pySquareSurfacePoints, 4, 6) // Do not work and i don't know why
-    py::def("rectangularSurface", pyRectangularSurface0, doc_pyRectangularSurface0.c_str());
-    py::def("rectangularSurface", pyRectangularSurface1, doc_pyRectangularSurface1.c_str());
-    py::def("rectangularSurface", pyRectangularSurface, doc_pyRectangularSurface.c_str());
+    py::def("rectangular_surface", pyRectangularSurface0, doc_pyRectangularSurface0.c_str());
+    py::def("rectangular_surface", pyRectangularSurface1, doc_pyRectangularSurface1.c_str());
+    py::def("rectangular_surface", pyRectangularSurface, doc_pyRectangularSurface.c_str());
 }
 
 } // namespace wcl

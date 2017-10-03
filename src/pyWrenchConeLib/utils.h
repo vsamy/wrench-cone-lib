@@ -32,4 +32,5 @@ Eigen::Vector3d extractV3d(const np::ndarray& v);
 Eigen::Matrix3d extractM3d(const np::ndarray& m);
 std::vector<ContactSurface> extractCSList(const py::list& py_pCSs);
 std::vector<Eigen::Vector3d> extractPointsList(const py::list& py_points);
+np::ndarray buildNumpyArray(const Eigen::MatrixXd& mat);
 }

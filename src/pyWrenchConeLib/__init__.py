@@ -1,5 +1,5 @@
-from pyWrenchConeLib import CWC
+from pyWrenchConeLib import WrenchCone
 from pyWrenchConeLib import ContactSurface
-from pyWrenchConeLib import rectangularSurface
+from pyWrenchConeLib import rectangular_surface
 
-__all__ = ["CWC", "ContactSurface", "rectangularSurface"]
+__all__ = ["WrenchCone", "ContactSurface", "rectangular_surface"]

@@ -82,4 +82,17 @@ std::vector<Eigen::Vector3d> extractPointsList(const py::list& py_points)
     return points;
 }
 
+np::ndarray buildNumpyArray(const Eigen::MatrixXd& mat)
+{
+    auto shape = py::make_tuple(mat.rows(), mat.cols()); // Maybe need to have row-major stride
+    np::dtype dt = np::dtype::get_builtin<double>();
+    np::ndarray mOut = np::empty(shape, dt);
+    for (Eigen::Index i = 0; i < mat.rows(); ++i)
+        for (Eigen::Index j = 0; j < mat.cols(); ++j)
+            mOut[i][j] = mat(i, j);
+
+    // return np::from_data(mat.data(), dt, shape, stride, py::object()); // Couldn't make it work :(
+    return mOut;
+}
+
 } // namespace wcl
