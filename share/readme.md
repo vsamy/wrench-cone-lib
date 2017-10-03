@@ -45,3 +45,7 @@ Add the path to your PYTHONPATH and you are done.
 ```bash
 export PYTHONPATH=$PYTHONPATH:<pid-workspace>/install/python2.7
 ```
+
+### Build example and docs
+You can perform a `ccmake .` in the build directory of the git **integration** branch.
+You can then mark **ON** the options for building the examples and doxygen files. Then `make build`
