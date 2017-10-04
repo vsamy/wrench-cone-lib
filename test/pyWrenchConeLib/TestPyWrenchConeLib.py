@@ -52,40 +52,47 @@ class TestPyWrenchConeLib(unittest.TestCase):
         a = wcl.ContactSurface(np.array([-1., -2., -3.]), np.identity(3), [np.zeros((3,))])
         a = wcl.ContactSurface(np.array([-1., -2., -3.]), np.identity(3), [np.zeros((3,))], 0.5)
         a = wcl.ContactSurface(np.array([-1., -2., -3.]), np.identity(3), [np.zeros((3,))], 0.5, 2)
+        a.mu = 0.4
+        a.nr_generators = 4
+        b = a.surface_position()
+        a.surface_position(np.array([0., 0., 0.]))
+        b = a.surface_rotation()
+        a.surface_rotation(-np.identity(3))
+        b = a.surface_points()
+        a.surface_points([np.array([1., 0., 0.]), np.array([0., 1., 0.]), np.array([0., 0., 1.])])
 
     def test_square_contact_surface(self):
-        b = wcl.rectangularSurface(0.3, 0.2, np.array([1., 2., 3.]), np.identity(3))
-        b = wcl.rectangularSurface(0.3, 0.2, np.array([1., 2., 3.]), np.identity(3), 0.5)
-        b = wcl.rectangularSurface(0.3, 0.2, np.array([1., 2., 3.]), np.identity(3), 0.5, 8)
+        b = wcl.rectangular_surface(0.3, 0.2, np.array([1., 2., 3.]), np.identity(3))
+        b = wcl.rectangular_surface(0.3, 0.2, np.array([1., 2., 3.]), np.identity(3), 0.5)
+        b = wcl.rectangular_surface(0.3, 0.2, np.array([1., 2., 3.]), np.identity(3), 0.5, 8)
 
     def test_cwc_1_surf(self):
         a = wcl.ContactSurface(np.array([-1., -2., -3.]), np.identity(3), [np.zeros((3,))])
-        cwc = wcl.CWC(self.com, a)
+        cwc = wcl.WrenchCone(self.com, a)
 
     def test_contact_wrench_cone(self):
-        rf_surf = wcl.rectangularSurface(self.rf_xhl, self.rf_yhl, self.rf_pos, self.rf_rot, self.rf_mu)
-        lf_surf = wcl.rectangularSurface(self.lf_xhl, self.lf_yhl, self.lf_pos, self.lf_rot, self.lf_mu)
-        cwc = wcl.CWC(self.com, [rf_surf, lf_surf])
-        cwc_span = cwc.getRays()
-        cwc_face = cwc.getHalfSpaces()
+        rf_surf = wcl.rectangular_surface(self.rf_xhl, self.rf_yhl, self.rf_pos, self.rf_rot, self.rf_mu)
+        lf_surf = wcl.rectangular_surface(self.lf_xhl, self.lf_yhl, self.lf_pos, self.lf_rot, self.lf_mu)
+        cwc = wcl.WrenchCone(self.com, [rf_surf, lf_surf])
+        cwc_span = cwc.get_rays()
+        cwc_face = cwc.get_halfspaces()
 
     def test_bad_domain_errors(self):
         a = wcl.ContactSurface(np.array([-1., -2., -3.]), np.identity(3), [np.zeros((3,))])
         with self.assertRaises(RuntimeError):
-            wcl.CWC(np.array([0, 0, 0]), a) # Vector of int
+            wcl.WrenchCone(np.array([0, 0, 0]), a) # Vector of int
         with self.assertRaises(RuntimeError):
-            wcl.CWC(np.array([0., 0.]), a) # Vector too short
+            wcl.WrenchCone(np.array([0., 0.]), a) # Vector too short
         with self.assertRaises(RuntimeError):
-            wcl.CWC(np.array([[0., 0., 0.], [0., 0., 0.]]), a) # Vector bad dimensions
+            wcl.WrenchCone(np.array([[0., 0., 0.], [0., 0., 0.]]), a) # Vector bad dimensions
         with self.assertRaises(RuntimeError):
-            wcl.CWC(np.array([[0., 0., 0.], [0., 0., 0.]]), [0, 0]) # Bad list of PyContactSurface
+            wcl.WrenchCone(np.array([[0., 0., 0.], [0., 0., 0.]]), [0, 0]) # Bad list of PyContactSurface
         with self.assertRaises(RuntimeError):
             wcl.ContactSurface(np.array([0., 0., 0.]), np.identity(3, dtype=int), [np.zeros((3,))]) # Matrix of int
         with self.assertRaises(RuntimeError):
             wcl.ContactSurface(np.array([0., 0., 0.]), np.identity(2), [np.zeros((3,))]) # Matrix bad dimension
         with self.assertRaises(RuntimeError):
             wcl.ContactSurface(np.array([0., 0., 0.]), np.identity(2), [0]) # Bad list of array
-
 
 if __name__ == '__main__':
     unittest.main()

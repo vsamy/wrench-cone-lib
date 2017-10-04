@@ -1,7 +1,7 @@
 /*      File: CWC.h
-*       This file is part of the program wrench-cone-lib
+*       This file is part of the program WrenchConeLib
 *       Program description : This library implements the Contact Wrench Cone as given [here](https://scaron.info/papers/journal/caron-tro-2016.pdf). It uses cdd for the polyhedron computation and Eigen for the matrix part. Python bindings are also available.
-*       Copyright (C) 2017 -  Vincent Samy (LIRMM). All Right reserved.
+*       Copyright (C) 2017 -  vsamy (LIRMM). All Right reserved.
 *
 *       This software is free software: you can redistribute it and/or modify
 *       it under the terms of the CeCILL-C license as published by
@@ -27,18 +27,18 @@ namespace wcl {
 /** CWC (Contact Wrench Cone) is the main class of this lib.
  * It computes the Contact Wrench Cone using 6D polyhedrons.
  */
-class CWC {
+class WrenchCone {
 public:
     /** Constructor
      * \param com The center of mass of the system
      * \param cp A contact surface
      */
-    CWC(const Eigen::Vector3d& com, const ContactSurface& cp);
+    WrenchCone(const Eigen::Vector3d& com, const ContactSurface& cp);
     /** Constructor
      * \param com The center of mass of the system
      * \param cps A list of contact surfaces
      */
-    CWC(const Eigen::Vector3d& com, const std::vector<ContactSurface>& cps);
+    WrenchCone(const Eigen::Vector3d& com, const std::vector<ContactSurface>& cps);
 
 
     /** Retrieve the V-representation (vertexes and rays of the polyhedron) of the CWC
@@ -48,7 +48,7 @@ public:
     /** Retrieve the H-representation (Half-space of the polyhedron) of the CWC
      * \return A matrix \f$G\f$ such that \f$Gw_g \leq 0\f$ with \f$w_g\f$ the contact wrench cone.
      */
-    Eigen::MatrixXd getHalfSpaces();
+    Eigen::MatrixXd getHalfspaces();
 
 private:
     void resizeG();
