@@ -85,7 +85,7 @@ class TestPyWrenchConeLib(unittest.TestCase):
             wcl.ContactSurface(np.array([0., 0., 0.]), np.identity(2), [np.zeros((3,))]) # Matrix bad dimension
         with self.assertRaises(RuntimeError):
             wcl.ContactSurface(np.array([0., 0., 0.]), np.identity(2), [0]) # Bad list of array
-        
+
 
 if __name__ == '__main__':
     unittest.main()

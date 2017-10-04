@@ -10,8 +10,8 @@
 #include <iostream>
 #include <utility>
 
-#include <WrenchConeLib/CWC.h>
-#include <WrenchConeLib/ContactSurface.h>
+#include <wcl/CWC.h>
+#include <wcl/ContactSurface.h>
 
 BOOST_AUTO_TEST_CASE(HUMANOID_FEET_RAYS)
 {

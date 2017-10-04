@@ -1,7 +1,7 @@
 /*      File: CWC.cpp
-*       This file is part of the program WrenchConeLib
+*       This file is part of the program wrench-cone-lib
 *       Program description : This library implements the Contact Wrench Cone as given [here](https://scaron.info/papers/journal/caron-tro-2016.pdf). It uses cdd for the polyhedron computation and Eigen for the matrix part. Python bindings are also available.
-*       Copyright (C) 2017 -  vsamy (LIRMM). All Right reserved.
+*       Copyright (C) 2017 -  Vincent Samy (LIRMM). All Right reserved.
 *
 *       This software is free software: you can redistribute it and/or modify
 *       it under the terms of the CeCILL-C license as published by
@@ -16,7 +16,7 @@
 *       along with this software. If not, it can be found on the official website
 *       of the CeCILL licenses family (http://www.cecill.info/index.en.html).
 */
-#include "WrenchConeLib/CWC.h"
+#include <wcl/CWC.h>
 
 #include <Eigen/Geometry>
 #include <cmath>
@@ -38,7 +38,7 @@ CWC::CWC(const Eigen::Vector3d& com, const std::vector<ContactSurface>& cps)
 }
 
 /* v-rep
-     * 
+     *
      */
 Eigen::MatrixXd CWC::getRays()
 {
@@ -47,7 +47,7 @@ Eigen::MatrixXd CWC::getRays()
 }
 
 /* h-rep
-     * 
+     *
      */
 Eigen::MatrixXd CWC::getHalfSpaces()
 {

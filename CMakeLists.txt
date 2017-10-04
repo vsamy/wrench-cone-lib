@@ -11,13 +11,13 @@ endif()
 
 PROJECT(wrench-cone-lib)
 
-declare_PID_Package(	
-			AUTHOR 			vsamy
+declare_PID_Package(
+			AUTHOR 			Vincent Samy
 			INSTITUTION		LIRMM
 			ADDRESS			git@github.com:vsamy/wrench-cone-lib.git
 			PUBLIC_ADDRESS	https://github.com/vsamy/wrench-cone-lib.git
 			MAIL			vincent.samy@lirmm.fr
-			YEAR 			2017 
+			YEAR 			2017
 			LICENSE 		CeCILL-C
 			DESCRIPTION 	"This library implements the Contact Wrench Cone as given [here](https://scaron.info/papers/journal/caron-tro-2016.pdf). It uses cdd for the polyhedron computation and Eigen for the matrix part. Python bindings are also available."
 			README 			readme.md
@@ -28,15 +28,6 @@ set_PID_Package_Version(0 3 0)
 #now finding packages
 declare_PID_Package_Dependency(PACKAGE eigen EXTERNAL VERSION 3.3.4)
 declare_PID_Package_Dependency(PACKAGE eigen-cdd NATIVE VERSION 0.4.0)
-
-if(BUILD_AND_RUN_TESTS OR GEN_PYTHON_BINDINGS)
-	declare_PID_Package_Dependency(PACKAGE boost EXTERNAL VERSION 1.64.0)
-endif()
-
-if(GEN_PYTHON_BINDINGS)
-	find_package(PythonLibs 2.7 REQUIRED)
-endif()
-
+declare_PID_Package_Dependency(PACKAGE boost EXTERNAL VERSION 1.64.0)
 
 build_PID_Package()
-

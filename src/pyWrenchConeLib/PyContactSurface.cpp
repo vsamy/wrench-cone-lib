@@ -1,7 +1,7 @@
 /*      File: PyContactSurface.cpp
-*       This file is part of the program WrenchConeLib
+*       This file is part of the program wrench-cone-lib
 *       Program description : This library implements the Contact Wrench Cone as given [here](https://scaron.info/papers/journal/caron-tro-2016.pdf). It uses cdd for the polyhedron computation and Eigen for the matrix part. Python bindings are also available.
-*       Copyright (C) 2017 -  vsamy (LIRMM). All Right reserved.
+*       Copyright (C) 2017 -  Vincent Samy (LIRMM). All Right reserved.
 *
 *       This software is free software: you can redistribute it and/or modify
 *       it under the terms of the CeCILL-C license as published by
@@ -85,7 +85,7 @@ void bindContactSurface()
     std::string doc_pyRectangularSurface = doc_pyRectangularSurface1 + "\n\tnrGenerators: Number of generators to approximate the friction cone";
 
     py::class_<PyContactSurface>("ContactSurface", doc_PyContactSurface.c_str(),
-        py::init<np::ndarray, np::ndarray, py::list, py::optional<double, unsigned int> >())
+      py::init<np::ndarray, np::ndarray, py::list, py::optional<double, unsigned int> >())
         .def_readwrite("mu", &PyContactSurface::mu, doc_mu.c_str())
         .def_readwrite("nrGenerators", &PyContactSurface::nrGenerators, doc_nrGenerators.c_str());
 
