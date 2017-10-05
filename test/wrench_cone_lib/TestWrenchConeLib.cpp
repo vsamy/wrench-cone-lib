@@ -5,8 +5,8 @@
 #include <Eigen/Geometry>
 #include <boost/test/unit_test.hpp>
 
-#include <WrenchConeLib/ContactSurface.h>
-#include <WrenchConeLib/WrenchCone.h>
+#include <wcl/WrenchCone.h>
+#include <wcl/ContactSurface.h>
 
 BOOST_AUTO_TEST_CASE(HUMANOID_FEET)
 {

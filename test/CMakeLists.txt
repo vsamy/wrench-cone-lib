@@ -1,20 +1,9 @@
 
-declare_PID_Component(
-    TEST_APPLICATION
-    NAME  TestWrenchConeLib
-    DIRECTORY WrenchConeLib
-)
 
-declare_PID_Component_Dependency(
-    COMPONENT TestWrenchConeLib
-    NATIVE WrenchConeLib
-)
 
-declare_PID_Component_Dependency(
-    COMPONENT TestWrenchConeLib
-    EXTERNAL  boost-utest
-    PACKAGE   boost
-)
+declare_PID_Component(TEST_APPLICATION NAME test-wrench-cone-lib DIRECTORY wrench_cone_lib)
+declare_PID_Component_Dependency(COMPONENT test-wrench-cone-lib NATIVE wrench-cone-lib)
+declare_PID_Component_Dependency(COMPONENT test-wrench-cone-lib EXTERNAL  boost-utest PACKAGE boost)
 
-run_PID_Test(NAME test-TestWrenchConeLib COMPONENT TestWrenchConeLib)
-add_test(NAME test-TestPyWrenchConeLib COMMAND ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/pyWrenchConeLib/TestPyWrenchConeLib.py)
+run_PID_Test(NAME testing-wrench-cone-lib COMPONENT test-wrench-cone-lib)
+run_PID_Test(NAME testing-python-wrapper PYTHON ARGUMENTS pyWrenchConeLib/TestPyWrenchConeLib.py)

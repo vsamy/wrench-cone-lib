@@ -16,7 +16,7 @@
 *       along with this software. If not, it can be found on the official website
 *       of the CeCILL licenses family (http://www.cecill.info/index.en.html).
 */
-#include "WrenchConeLib/WrenchCone.h"
+#include <wcl/WrenchCone.h>
 
 #include <Eigen/Geometry>
 #include <cmath>
@@ -38,7 +38,7 @@ WrenchCone::WrenchCone(const Eigen::Vector3d& com, const std::vector<ContactSurf
 }
 
 /* v-rep
-     * 
+     *
      */
 Eigen::MatrixXd WrenchCone::getRays()
 {
@@ -47,7 +47,7 @@ Eigen::MatrixXd WrenchCone::getRays()
 }
 
 /* h-rep
-     * 
+     *
      */
 Eigen::MatrixXd WrenchCone::getHalfspaces()
 {

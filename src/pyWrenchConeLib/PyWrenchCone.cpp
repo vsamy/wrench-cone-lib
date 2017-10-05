@@ -19,7 +19,7 @@
 #include "PyWrenchCone.h"
 #include "utils.h"
 #include <Eigen/Core>
-#include <WrenchConeLib/ContactSurface.h>
+#include <wcl/ContactSurface.h>
 #include <boost/python.hpp>
 
 namespace wcl {

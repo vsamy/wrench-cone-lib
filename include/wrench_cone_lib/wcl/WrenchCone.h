@@ -18,7 +18,7 @@
 */
 #pragma once
 
-#include "ContactSurface.h"
+#include <wcl/ContactSurface.h>
 #include <eigen-cdd/Polyhedron.h>
 #include <vector>
 
