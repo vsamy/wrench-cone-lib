@@ -7,6 +7,12 @@ declare_PID_Component(
 
 declare_PID_Component_Dependency(
     COMPONENT cppPerf
-    NATIVE WrenchConeLib
+    NATIVE wrench-cone-lib
     PACKAGE wrench-cone-lib
+)
+
+declare_PID_Component_Dependency(
+    COMPONENT cppPerf
+    EXTERNAL eigen 
+    PACKAGE eigen
 )

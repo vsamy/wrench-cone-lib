@@ -8,7 +8,8 @@ declare_PID_Component(
 declare_PID_Component_Dependency(
     COMPONENT wrench-cone-lib
     EXPORT EXTERNAL eigen 
-    PACKAGE eigen)
+    PACKAGE eigen
+)
 
 declare_PID_Component_Dependency(
     COMPONENT wrench-cone-lib
