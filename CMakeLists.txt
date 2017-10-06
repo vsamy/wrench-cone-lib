@@ -4,11 +4,6 @@ set(WORKSPACE_DIR ${CMAKE_SOURCE_DIR}/../.. CACHE PATH "root of the packages wor
 list(APPEND CMAKE_MODULE_PATH ${WORKSPACE_DIR}/share/cmake/system) # using generic scripts/modules of the workspace
 include(Package_Definition NO_POLICY_SCOPE)
 
-option(GEN_PYTHON_BINDINGS "Generate bindings for Python" ON)
-if(${GEN_PYTHON_BINDINGS})
-	set(PYTHON_INSTALL_PATH "/usr/local/lib/python2.7" CACHE STRING "")
-endif()
-
 PROJECT(wrench-cone-lib)
 
 declare_PID_Package(

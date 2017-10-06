@@ -1,2 +1,6 @@
 
-declare_PID_Component(PYTHON_PACK NAME WrenchConeLibPerf DIRECTORY pyWrenchConeLibPerf)
+declare_PID_Component(
+    PYTHON_PACK 
+    NAME WrenchConeLibPerf 
+    DIRECTORY pyWrenchConeLibPerf
+)

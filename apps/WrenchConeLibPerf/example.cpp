@@ -1,8 +1,8 @@
 
 #include <Eigen/Core>
 #include <Eigen/Geometry>
-#include <WrenchConeLib/ContactSurface.h>
-#include <WrenchConeLib/WrenchCone.h>
+#include <wcl/ContactSurface.h>
+#include <wcl/WrenchCone.h>
 #include <algorithm>
 #include <chrono>
 #include <iostream>

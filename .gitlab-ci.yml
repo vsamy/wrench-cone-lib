@@ -129,6 +129,27 @@ stages:
 
 ############ patterns for platforms selection #############
 # here the project generates patterns for runner selection according for all platforms defined in the workspace
+#platform x86_32_linux_abi98
+
+.selection_platform_x86_32_linux_abi98_: &selection_platform_x86_32_linux_abi98
+    tags:
+        - pid
+        - x86_32_linux_abi98
+
+#platform x86_64_xenomai_abi11
+
+.selection_platform_x86_64_xenomai_abi11_: &selection_platform_x86_64_xenomai_abi11
+    tags:
+        - pid
+        - x86_64_xenomai_abi11
+
+#platform x86_64_linux_abi98
+
+.selection_platform_x86_64_linux_abi98_: &selection_platform_x86_64_linux_abi98
+    tags:
+        - pid
+        - x86_64_linux_abi98
+
 #platform x86_64_macosx_abi11
 
 .selection_platform_x86_64_macosx_abi11_: &selection_platform_x86_64_macosx_abi11
@@ -143,13 +164,6 @@ stages:
         - pid
         - x86_64_macosx_abi98
 
-#platform x86_64_xenomai_abi11
-
-.selection_platform_x86_64_xenomai_abi11_: &selection_platform_x86_64_xenomai_abi11
-    tags:
-        - pid
-        - x86_64_xenomai_abi11
-
 #platform x86_32_xenomai_abi98
 
 .selection_platform_x86_32_xenomai_abi98_: &selection_platform_x86_32_xenomai_abi98
@@ -157,33 +171,12 @@ stages:
         - pid
         - x86_32_xenomai_abi98
 
-#platform x86_64_linux_abi98
-
-.selection_platform_x86_64_linux_abi98_: &selection_platform_x86_64_linux_abi98
-    tags:
-        - pid
-        - x86_64_linux_abi98
-
 #platform arm_32_linux_abi98
 
 .selection_platform_arm_32_linux_abi98_: &selection_platform_arm_32_linux_abi98
     tags:
         - pid
         - arm_32_linux_abi98
-
-#platform x86_32_linux_abi98
-
-.selection_platform_x86_32_linux_abi98_: &selection_platform_x86_32_linux_abi98
-    tags:
-        - pid
-        - x86_32_linux_abi98
-
-#platform x86_64_linux_abi11
-
-.selection_platform_x86_64_linux_abi11_: &selection_platform_x86_64_linux_abi11
-    tags:
-        - pid
-        - x86_64_linux_abi11
 
 #platform arm_32_abi11
 
@@ -199,9 +192,130 @@ stages:
         - pid
         - x86_32_linux_abi11
 
+#platform x86_64_linux_abi11
+
+.selection_platform_x86_64_linux_abi11_: &selection_platform_x86_64_linux_abi11
+    tags:
+        - pid
+        - x86_64_linux_abi11
+
 
 
 ############ jobs definition, by platform #############
+
+#pipeline generated for platform: x86_32_linux_abi98
+
+#integration jobs for platform x86_32_linux_abi98
+
+configure_integration_x86_32_linux_abi98:
+  <<: *configure_integration
+  <<: *selection_platform_x86_32_linux_abi98
+
+build_integration_x86_32_linux_abi98:
+  <<: *build_integration
+  <<: *selection_platform_x86_32_linux_abi98
+
+deploy_integration_x86_32_linux_abi98:
+  <<: *deploy_integration
+  <<: *selection_platform_x86_32_linux_abi98
+
+cleanup_integration_x86_32_linux_abi98:
+  <<: *cleanup_integration
+  <<: *selection_platform_x86_32_linux_abi98
+
+#release jobs for platform x86_32_linux_abi98
+
+configure_release_x86_32_linux_abi98:
+  <<: *configure_release
+  <<: *selection_platform_x86_32_linux_abi98
+
+build_release_x86_32_linux_abi98:
+  <<: *build_release
+  <<: *selection_platform_x86_32_linux_abi98
+
+deploy_release_x86_32_linux_abi98:
+  <<: *deploy_release
+  <<: *selection_platform_x86_32_linux_abi98
+
+cleanup_release_x86_32_linux_abi98:
+  <<: *cleanup_release
+  <<: *selection_platform_x86_32_linux_abi98
+
+#pipeline generated for platform: x86_64_xenomai_abi11
+
+#integration jobs for platform x86_64_xenomai_abi11
+
+configure_integration_x86_64_xenomai_abi11:
+  <<: *configure_integration
+  <<: *selection_platform_x86_64_xenomai_abi11
+
+build_integration_x86_64_xenomai_abi11:
+  <<: *build_integration
+  <<: *selection_platform_x86_64_xenomai_abi11
+
+deploy_integration_x86_64_xenomai_abi11:
+  <<: *deploy_integration
+  <<: *selection_platform_x86_64_xenomai_abi11
+
+cleanup_integration_x86_64_xenomai_abi11:
+  <<: *cleanup_integration
+  <<: *selection_platform_x86_64_xenomai_abi11
+
+#release jobs for platform x86_64_xenomai_abi11
+
+configure_release_x86_64_xenomai_abi11:
+  <<: *configure_release
+  <<: *selection_platform_x86_64_xenomai_abi11
+
+build_release_x86_64_xenomai_abi11:
+  <<: *build_release
+  <<: *selection_platform_x86_64_xenomai_abi11
+
+deploy_release_x86_64_xenomai_abi11:
+  <<: *deploy_release
+  <<: *selection_platform_x86_64_xenomai_abi11
+
+cleanup_release_x86_64_xenomai_abi11:
+  <<: *cleanup_release
+  <<: *selection_platform_x86_64_xenomai_abi11
+
+#pipeline generated for platform: x86_64_linux_abi98
+
+#integration jobs for platform x86_64_linux_abi98
+
+configure_integration_x86_64_linux_abi98:
+  <<: *configure_integration
+  <<: *selection_platform_x86_64_linux_abi98
+
+build_integration_x86_64_linux_abi98:
+  <<: *build_integration
+  <<: *selection_platform_x86_64_linux_abi98
+
+deploy_integration_x86_64_linux_abi98:
+  <<: *deploy_integration
+  <<: *selection_platform_x86_64_linux_abi98
+
+cleanup_integration_x86_64_linux_abi98:
+  <<: *cleanup_integration
+  <<: *selection_platform_x86_64_linux_abi98
+
+#release jobs for platform x86_64_linux_abi98
+
+configure_release_x86_64_linux_abi98:
+  <<: *configure_release
+  <<: *selection_platform_x86_64_linux_abi98
+
+build_release_x86_64_linux_abi98:
+  <<: *build_release
+  <<: *selection_platform_x86_64_linux_abi98
+
+deploy_release_x86_64_linux_abi98:
+  <<: *deploy_release
+  <<: *selection_platform_x86_64_linux_abi98
+
+cleanup_release_x86_64_linux_abi98:
+  <<: *cleanup_release
+  <<: *selection_platform_x86_64_linux_abi98
 
 #pipeline generated for platform: x86_64_macosx_abi11
 
@@ -279,44 +393,6 @@ cleanup_release_x86_64_macosx_abi98:
   <<: *cleanup_release
   <<: *selection_platform_x86_64_macosx_abi98
 
-#pipeline generated for platform: x86_64_xenomai_abi11
-
-#integration jobs for platform x86_64_xenomai_abi11
-
-configure_integration_x86_64_xenomai_abi11:
-  <<: *configure_integration
-  <<: *selection_platform_x86_64_xenomai_abi11
-
-build_integration_x86_64_xenomai_abi11:
-  <<: *build_integration
-  <<: *selection_platform_x86_64_xenomai_abi11
-
-deploy_integration_x86_64_xenomai_abi11:
-  <<: *deploy_integration
-  <<: *selection_platform_x86_64_xenomai_abi11
-
-cleanup_integration_x86_64_xenomai_abi11:
-  <<: *cleanup_integration
-  <<: *selection_platform_x86_64_xenomai_abi11
-
-#release jobs for platform x86_64_xenomai_abi11
-
-configure_release_x86_64_xenomai_abi11:
-  <<: *configure_release
-  <<: *selection_platform_x86_64_xenomai_abi11
-
-build_release_x86_64_xenomai_abi11:
-  <<: *build_release
-  <<: *selection_platform_x86_64_xenomai_abi11
-
-deploy_release_x86_64_xenomai_abi11:
-  <<: *deploy_release
-  <<: *selection_platform_x86_64_xenomai_abi11
-
-cleanup_release_x86_64_xenomai_abi11:
-  <<: *cleanup_release
-  <<: *selection_platform_x86_64_xenomai_abi11
-
 #pipeline generated for platform: x86_32_xenomai_abi98
 
 #integration jobs for platform x86_32_xenomai_abi98
@@ -355,44 +431,6 @@ cleanup_release_x86_32_xenomai_abi98:
   <<: *cleanup_release
   <<: *selection_platform_x86_32_xenomai_abi98
 
-#pipeline generated for platform: x86_64_linux_abi98
-
-#integration jobs for platform x86_64_linux_abi98
-
-configure_integration_x86_64_linux_abi98:
-  <<: *configure_integration
-  <<: *selection_platform_x86_64_linux_abi98
-
-build_integration_x86_64_linux_abi98:
-  <<: *build_integration
-  <<: *selection_platform_x86_64_linux_abi98
-
-deploy_integration_x86_64_linux_abi98:
-  <<: *deploy_integration
-  <<: *selection_platform_x86_64_linux_abi98
-
-cleanup_integration_x86_64_linux_abi98:
-  <<: *cleanup_integration
-  <<: *selection_platform_x86_64_linux_abi98
-
-#release jobs for platform x86_64_linux_abi98
-
-configure_release_x86_64_linux_abi98:
-  <<: *configure_release
-  <<: *selection_platform_x86_64_linux_abi98
-
-build_release_x86_64_linux_abi98:
-  <<: *build_release
-  <<: *selection_platform_x86_64_linux_abi98
-
-deploy_release_x86_64_linux_abi98:
-  <<: *deploy_release
-  <<: *selection_platform_x86_64_linux_abi98
-
-cleanup_release_x86_64_linux_abi98:
-  <<: *cleanup_release
-  <<: *selection_platform_x86_64_linux_abi98
-
 #pipeline generated for platform: arm_32_linux_abi98
 
 #integration jobs for platform arm_32_linux_abi98
@@ -430,82 +468,6 @@ deploy_release_arm_32_linux_abi98:
 cleanup_release_arm_32_linux_abi98:
   <<: *cleanup_release
   <<: *selection_platform_arm_32_linux_abi98
-
-#pipeline generated for platform: x86_32_linux_abi98
-
-#integration jobs for platform x86_32_linux_abi98
-
-configure_integration_x86_32_linux_abi98:
-  <<: *configure_integration
-  <<: *selection_platform_x86_32_linux_abi98
-
-build_integration_x86_32_linux_abi98:
-  <<: *build_integration
-  <<: *selection_platform_x86_32_linux_abi98
-
-deploy_integration_x86_32_linux_abi98:
-  <<: *deploy_integration
-  <<: *selection_platform_x86_32_linux_abi98
-
-cleanup_integration_x86_32_linux_abi98:
-  <<: *cleanup_integration
-  <<: *selection_platform_x86_32_linux_abi98
-
-#release jobs for platform x86_32_linux_abi98
-
-configure_release_x86_32_linux_abi98:
-  <<: *configure_release
-  <<: *selection_platform_x86_32_linux_abi98
-
-build_release_x86_32_linux_abi98:
-  <<: *build_release
-  <<: *selection_platform_x86_32_linux_abi98
-
-deploy_release_x86_32_linux_abi98:
-  <<: *deploy_release
-  <<: *selection_platform_x86_32_linux_abi98
-
-cleanup_release_x86_32_linux_abi98:
-  <<: *cleanup_release
-  <<: *selection_platform_x86_32_linux_abi98
-
-#pipeline generated for platform: x86_64_linux_abi11
-
-#integration jobs for platform x86_64_linux_abi11
-
-configure_integration_x86_64_linux_abi11:
-  <<: *configure_integration
-  <<: *selection_platform_x86_64_linux_abi11
-
-build_integration_x86_64_linux_abi11:
-  <<: *build_integration
-  <<: *selection_platform_x86_64_linux_abi11
-
-deploy_integration_x86_64_linux_abi11:
-  <<: *deploy_integration
-  <<: *selection_platform_x86_64_linux_abi11
-
-cleanup_integration_x86_64_linux_abi11:
-  <<: *cleanup_integration
-  <<: *selection_platform_x86_64_linux_abi11
-
-#release jobs for platform x86_64_linux_abi11
-
-configure_release_x86_64_linux_abi11:
-  <<: *configure_release
-  <<: *selection_platform_x86_64_linux_abi11
-
-build_release_x86_64_linux_abi11:
-  <<: *build_release
-  <<: *selection_platform_x86_64_linux_abi11
-
-deploy_release_x86_64_linux_abi11:
-  <<: *deploy_release
-  <<: *selection_platform_x86_64_linux_abi11
-
-cleanup_release_x86_64_linux_abi11:
-  <<: *cleanup_release
-  <<: *selection_platform_x86_64_linux_abi11
 
 #pipeline generated for platform: arm_32_abi11
 
@@ -582,4 +544,42 @@ deploy_release_x86_32_linux_abi11:
 cleanup_release_x86_32_linux_abi11:
   <<: *cleanup_release
   <<: *selection_platform_x86_32_linux_abi11
+
+#pipeline generated for platform: x86_64_linux_abi11
+
+#integration jobs for platform x86_64_linux_abi11
+
+configure_integration_x86_64_linux_abi11:
+  <<: *configure_integration
+  <<: *selection_platform_x86_64_linux_abi11
+
+build_integration_x86_64_linux_abi11:
+  <<: *build_integration
+  <<: *selection_platform_x86_64_linux_abi11
+
+deploy_integration_x86_64_linux_abi11:
+  <<: *deploy_integration
+  <<: *selection_platform_x86_64_linux_abi11
+
+cleanup_integration_x86_64_linux_abi11:
+  <<: *cleanup_integration
+  <<: *selection_platform_x86_64_linux_abi11
+
+#release jobs for platform x86_64_linux_abi11
+
+configure_release_x86_64_linux_abi11:
+  <<: *configure_release
+  <<: *selection_platform_x86_64_linux_abi11
+
+build_release_x86_64_linux_abi11:
+  <<: *build_release
+  <<: *selection_platform_x86_64_linux_abi11
+
+deploy_release_x86_64_linux_abi11:
+  <<: *deploy_release
+  <<: *selection_platform_x86_64_linux_abi11
+
+cleanup_release_x86_64_linux_abi11:
+  <<: *cleanup_release
+  <<: *selection_platform_x86_64_linux_abi11
 
