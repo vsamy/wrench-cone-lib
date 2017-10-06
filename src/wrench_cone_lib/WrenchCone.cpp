@@ -23,32 +23,26 @@
 
 namespace wcl {
 
-WrenchCone::WrenchCone(const Eigen::Vector3d& com, const ContactSurface& cp)
-    : com_(com)
+WrenchCone::WrenchCone(const Eigen::Vector3d& applicationPoint, const ContactSurface& cp)
+    : ap_(applicationPoint)
     , cp_({ cp })
 {
     resizeG();
 }
 
-WrenchCone::WrenchCone(const Eigen::Vector3d& com, const std::vector<ContactSurface>& cps)
-    : com_(com)
+WrenchCone::WrenchCone(const Eigen::Vector3d& applicationPoint, const std::vector<ContactSurface>& cps)
+    : ap_(applicationPoint)
     , cp_(cps)
 {
     resizeG();
 }
 
-/* v-rep
-     *
-     */
 Eigen::MatrixXd WrenchCone::getRays()
 {
     computeG();
     return G_;
 }
 
-/* h-rep
-     *
-     */
 Eigen::MatrixXd WrenchCone::getHalfspaces()
 {
     computeG();
@@ -75,7 +69,7 @@ void WrenchCone::computeG()
     for (auto cp : cp_) {
         auto generators = generateCone(cp);
         for (auto p : cp.points) {
-            Eigen::Vector3d r = cp.r_0_s + p - com_;
+            Eigen::Vector3d r = cp.r_0_s + p - ap_;
             for (auto g : generators) {
                 G_.col(col).segment<3>(0) = g;
                 G_.col(col).segment<3>(3).noalias() = skewMatrix(r) * g;

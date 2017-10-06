@@ -30,15 +30,15 @@ namespace wcl {
 class WrenchCone {
 public:
     /** Constructor
-     * \param com The center of mass of the system
+     * \param applicationPoint The application point of the wrench
      * \param cp A contact surface
      */
-    WrenchCone(const Eigen::Vector3d& com, const ContactSurface& cp);
+    WrenchCone(const Eigen::Vector3d& applicationPoint, const ContactSurface& cp);
     /** Constructor
-     * \param com The center of mass of the system
+     * \param applicationPoint The application point of the wrench
      * \param cps A list of contact surfaces
      */
-    WrenchCone(const Eigen::Vector3d& com, const std::vector<ContactSurface>& cps);
+    WrenchCone(const Eigen::Vector3d& applicationPoint, const std::vector<ContactSurface>& cps);
 
 
     /** Retrieve the V-representation (vertexes and rays of the polyhedron) of the CWC
@@ -57,7 +57,7 @@ private:
     std::vector<Eigen::Vector3d> generateCone(const ContactSurface& cp);
 
 protected: // protected and not private for python bindings
-    Eigen::Vector3d com_;
+    Eigen::Vector3d ap_;
     std::vector<ContactSurface> cp_;
     Eigen::MatrixXd G_;
     Eigen::Polyhedron polyhedron_;
