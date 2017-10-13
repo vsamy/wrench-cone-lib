@@ -48,18 +48,22 @@ class TestPyWrenchConeLib(unittest.TestCase):
         self.rf_yhl = 0.05
         self.rf_mu = 0.5
 
+    def test_list_input(self):
+        a = wcl.ContactSurface([-1., -2., -3.], np.identity(3), [np.zeros((3,))])
+        a = wcl.ContactSurface(np.array([-1., -2., -3.]), np.identity(3), [[0, 0, 0], [1, 2, 3]])
+
     def test_contact_surface(self):
         a = wcl.ContactSurface(np.array([-1., -2., -3.]), np.identity(3), [np.zeros((3,))])
         a = wcl.ContactSurface(np.array([-1., -2., -3.]), np.identity(3), [np.zeros((3,))], 0.5)
         a = wcl.ContactSurface(np.array([-1., -2., -3.]), np.identity(3), [np.zeros((3,))], 0.5, 2)
         a.mu = 0.4
         a.nr_generators = 4
-        b = a.surface_position()
-        a.surface_position(np.array([0., 0., 0.]))
-        b = a.surface_rotation()
-        a.surface_rotation(-np.identity(3))
-        b = a.surface_points()
-        a.surface_points([np.array([1., 0., 0.]), np.array([0., 1., 0.]), np.array([0., 0., 1.])])
+        b = a.position
+        a.position = np.array([0., 0., 0.])
+        b = a.rotation
+        a.rotation = -np.identity(3)
+        b = a.points
+        a.points = [np.array([1., 0., 0.]), np.array([0., 1., 0.]), np.array([0., 0., 1.])]
 
     def test_square_contact_surface(self):
         b = wcl.rectangular_surface(0.3, 0.2, np.array([1., 2., 3.]), np.identity(3))
@@ -79,19 +83,19 @@ class TestPyWrenchConeLib(unittest.TestCase):
 
     def test_bad_domain_errors(self):
         a = wcl.ContactSurface(np.array([-1., -2., -3.]), np.identity(3), [np.zeros((3,))])
-        with self.assertRaises(RuntimeError):
+        with self.assertRaises(Exception):
             wcl.WrenchCone(np.array([0, 0, 0]), a) # Vector of int
-        with self.assertRaises(RuntimeError):
+        with self.assertRaises(Exception):
             wcl.WrenchCone(np.array([0., 0.]), a) # Vector too short
-        with self.assertRaises(RuntimeError):
+        with self.assertRaises(Exception):
             wcl.WrenchCone(np.array([[0., 0., 0.], [0., 0., 0.]]), a) # Vector bad dimensions
-        with self.assertRaises(RuntimeError):
+        with self.assertRaises(Exception):
             wcl.WrenchCone(np.array([[0., 0., 0.], [0., 0., 0.]]), [0, 0]) # Bad list of PyContactSurface
-        with self.assertRaises(RuntimeError):
+        with self.assertRaises(Exception):
             wcl.ContactSurface(np.array([0., 0., 0.]), np.identity(3, dtype=int), [np.zeros((3,))]) # Matrix of int
-        with self.assertRaises(RuntimeError):
+        with self.assertRaises(Exception):
             wcl.ContactSurface(np.array([0., 0., 0.]), np.identity(2), [np.zeros((3,))]) # Matrix bad dimension
-        with self.assertRaises(RuntimeError):
+        with self.assertRaises(Exception):
             wcl.ContactSurface(np.array([0., 0., 0.]), np.identity(2), [0]) # Bad list of array
 
 if __name__ == '__main__':

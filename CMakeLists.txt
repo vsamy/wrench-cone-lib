@@ -24,5 +24,6 @@ set_PID_Package_Version(0 5 0)
 declare_PID_Package_Dependency(PACKAGE eigen EXTERNAL VERSION 3.3.4)
 declare_PID_Package_Dependency(PACKAGE eigen-cdd NATIVE VERSION 0.4.0)
 declare_PID_Package_Dependency(PACKAGE boost EXTERNAL VERSION 1.64.0)
+declare_PID_Package_Dependency(PACKAGE pygen-converter NATIVE VERSION 0.2)
 
 build_PID_Package()

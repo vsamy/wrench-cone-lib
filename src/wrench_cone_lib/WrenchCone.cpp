@@ -69,7 +69,7 @@ void WrenchCone::computeG()
     for (auto cp : cp_) {
         auto generators = generateCone(cp);
         for (auto p : cp.points) {
-            Eigen::Vector3d r = cp.r_0_s + p - ap_;
+            Eigen::Vector3d r = cp.position + p - ap_;
             for (auto g : generators) {
                 G_.col(col).segment<3>(0) = g;
                 G_.col(col).segment<3>(3).noalias() = skewMatrix(r) * g;
@@ -90,7 +90,7 @@ std::vector<Eigen::Vector3d> WrenchCone::generateCone(const ContactSurface& cp)
     double step = (M_PI * 2.) / cp.nrGenerators;
 
     for (int i = 0; i < cp.nrGenerators; ++i) {
-        generators[i] = cp.E_0_s.transpose() * Eigen::AngleAxisd(step * i, normal) * gen;
+        generators[i] = cp.rotation.transpose() * Eigen::AngleAxisd(step * i, normal) * gen;
     }
 
     return generators;

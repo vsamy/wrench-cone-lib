@@ -32,6 +32,12 @@ declare_PID_Component_Dependency(
     NATIVE wrench-cone-lib
 )
 
+declare_PID_Component_Dependency(
+    COMPONENT WrenchConeLib
+    EXPORT NATIVE pygen
+    PACKAGE pygen-converter
+)
+
 get_PID_Platform_Info(PYTHON PY_VERSION)
 
 if(PY_VERSION VERSION_LESS 3.0)

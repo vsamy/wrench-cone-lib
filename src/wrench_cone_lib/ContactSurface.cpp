@@ -21,15 +21,15 @@
 
 namespace wcl {
 
-wcl::ContactSurface rectangularSurface(double xHalfLength, double yHalfLength, const Eigen::Vector3d& r_0_s,
-    const Eigen::Matrix3d& E_0_s, double mu, unsigned int nrGenerators)
+wcl::ContactSurface rectangularSurface(double xHalfLength, double yHalfLength, const Eigen::Vector3d& position,
+    const Eigen::Matrix3d& rotation, double mu, unsigned int nrGenerators)
 {
     std::vector<Eigen::Vector3d> p;
     p.emplace_back(xHalfLength, yHalfLength, 0);
     p.emplace_back(xHalfLength, -yHalfLength, 0);
     p.emplace_back(-xHalfLength, -yHalfLength, 0);
     p.emplace_back(-xHalfLength, yHalfLength, 0);
-    return wcl::ContactSurface({r_0_s, E_0_s, p, mu, nrGenerators});
+    return wcl::ContactSurface({position, rotation, p, mu, nrGenerators});
 }
 
 } // namespace wcl

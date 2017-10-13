@@ -27,8 +27,8 @@ namespace wcl {
  * It handles all the needed information to compute the CWC.
  */
 struct ContactSurface {
-    Eigen::Vector3d r_0_s; /**< Position vector of the surface in the world coordinates */
-    Eigen::Matrix3d E_0_s; /**< Rotation matrix of the surface from the world frame to the surface frame */
+    Eigen::Vector3d position; /**< Position vector of the surface in the world coordinates */
+    Eigen::Matrix3d rotation; /**< Rotation matrix of the surface from the world frame to the surface frame */
     std::vector<Eigen::Vector3d> points; /**< List of points belonging to the surface in the surface coordinates */
     double mu = 0.7; /**< Static friction coefficient of the surface */
     unsigned int nrGenerators = 4; /**< Number of generators to approximate the friction cone */
@@ -38,13 +38,13 @@ struct ContactSurface {
  * The x-axis, y-axis and z-axis are defined with regard to the given rotation matrix E_0_s.
  * \param xHalfLength the half-length of the surface on the x-axis
  * \param yHalfLength the half-length of the surface on the y-axis
- * \param r_0_s position vector of the surface in the world coordinates
- * \param E_0_s rotation matrix of the surface from the world frame to the surface frame
+ * \param position position vector of the surface in the world coordinates
+ * \param rotation rotation matrix of the surface from the world frame to the surface frame
  * \param mu static friction coefficient of the surface
  * \param nrGenerators number of generators to approximate the friction cone
  * \return A squared ContactSurface
  */
-ContactSurface rectangularSurface(double xHalfLength, double yHalfLength, const Eigen::Vector3d& r_0_s,
-    const Eigen::Matrix3d& E_0_s, double mu = 0.7, unsigned int nrGenerators = 4);
+ContactSurface rectangularSurface(double xHalfLength, double yHalfLength, const Eigen::Vector3d& position,
+    const Eigen::Matrix3d& rotation, double mu = 0.7, unsigned int nrGenerators = 4);
 
 } // namespace wcl
