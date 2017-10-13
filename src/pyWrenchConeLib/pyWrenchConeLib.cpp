@@ -24,8 +24,6 @@
 #include <wcl/ContactSurface.h>
 #include <wcl/WrenchCone.h>
 
-#include <iostream>
-
 namespace py = boost::python;
 namespace np = boost::python::numpy;
 
