@@ -18,7 +18,7 @@ declare_PID_Package(
 			README 			readme.md
 )
 
-set_PID_Package_Version(0 5 0)
+set_PID_Package_Version(0 6 0)
 
 #now finding packages
 declare_PID_Package_Dependency(PACKAGE eigen EXTERNAL VERSION 3.3.4)
