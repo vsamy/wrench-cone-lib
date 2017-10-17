@@ -3,6 +3,7 @@ declare_PID_Component(
     NAME wrench-cone-lib 
     DIRECTORY wrench_cone_lib
     CXX_STANDARD 14
+    INTERNAL DEFINITIONS ${COMPILER_DEFS}
 )
 
 declare_PID_Component_Dependency(

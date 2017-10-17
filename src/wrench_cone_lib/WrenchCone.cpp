@@ -71,7 +71,7 @@ void WrenchCone::computeG()
         for (auto p : cp.points) {
             Eigen::Vector3d r = cp.position + p - ap_;
             for (auto g : generators) {
-#if PLUCKER_NOTATION
+#ifdef PLUCKER_NOTATION
                 G_.col(col).segment<3>(0).noalias() = skewMatrix(r) * g;
                 G_.col(col).segment<3>(3) = g;
 #else

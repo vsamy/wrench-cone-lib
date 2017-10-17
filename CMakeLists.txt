@@ -8,6 +8,11 @@ PROJECT(wrench-cone-lib)
 
 option(PLUCKER_NOTATION "Plucker notation is used [ang lin], else the reverse is used [lin, ang]" OFF)
 
+set(COMPILER_DEFS "")
+if(${PLUCKER_NOTATION})
+	set(COMPILER_DEFS "PLUCKER_NOTATION")
+endif()
+
 declare_PID_Package(
 			AUTHOR 			Vincent Samy
 			INSTITUTION		LIRMM
@@ -20,7 +25,7 @@ declare_PID_Package(
 			README 			readme.md
 )
 
-set_PID_Package_Version(0 6 0)
+set_PID_Package_Version(0 5 3)
 
 #now finding packages
 declare_PID_Package_Dependency(PACKAGE eigen EXTERNAL VERSION 3.3.4)
