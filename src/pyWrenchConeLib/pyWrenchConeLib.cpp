@@ -19,6 +19,7 @@
 // #include "WrenchCone.h"
 #include <boost/python.hpp>
 #include <boost/python/numpy.hpp>
+#include <boost/shared_ptr.hpp>
 #include <memory>
 #include <pygen/converters.h>
 #include <wcl/ContactSurface.h>
@@ -26,6 +27,10 @@
 
 namespace py = boost::python;
 namespace np = boost::python::numpy;
+
+/*
+ * Converters
+ */
 
 struct python_list_of_list_to_std_vector_of_eigen_Vector3d {
     python_list_of_list_to_std_vector_of_eigen_Vector3d()
@@ -144,61 +149,10 @@ struct std_vector_of_eigen_Vector3d_to_python_list {
     }
 };
 
-namespace wcl {
-// ContactSurface struct with getter and setter
-struct PyContactSurface : public ContactSurface {
-    PyContactSurface(const Eigen::Vector3d& Py_position, const Eigen::Matrix3d& Py_rotation, std::vector<Eigen::Vector3d> Py_points,
-        double Py_mu = 0.7, unsigned int Py_nrGenerators = 4)
-    {
-        position = Py_position;
-        rotation = Py_rotation;
-        points = Py_points;
-        mu = Py_mu;
-        nrGenerators = Py_nrGenerators;
-    }
-
-    Eigen::Vector3d get_position() { return position; }
-    void set_position(const Eigen::Vector3d& pos) { position = pos; }
-    Eigen::Matrix3d get_rotation() { return rotation; }
-    void set_rotation(const Eigen::Matrix3d& rot) { rotation = rot; }
-    std::vector<Eigen::Vector3d> get_points() { return points; }
-    void set_points(const std::vector<Eigen::Vector3d>& ps) { points = ps; }
-};
-
-// Wrench that can get PyContactSurface
-class PyWrenchCone : public WrenchCone {
-public:
-    using WrenchCone::WrenchCone;
-    PyWrenchCone(const Eigen::Vector3d& applicationPoint, const std::vector<PyContactSurface>& cps)
-        : WrenchCone(applicationPoint, std::vector<ContactSurface>(cps.cbegin(), cps.cend()))
-    {
-    }
-};
-
-// Create wrappers
-PyContactSurface PyRectangularSurface(double xHalfLength, double yHalfLength, const Eigen::Vector3d& position,
-    const Eigen::Matrix3d& rotation, double mu = 0.7, unsigned int nrGenerators = 4)
-{
-    std::vector<Eigen::Vector3d> p;
-    p.emplace_back(xHalfLength, yHalfLength, 0);
-    p.emplace_back(xHalfLength, -yHalfLength, 0);
-    p.emplace_back(-xHalfLength, -yHalfLength, 0);
-    p.emplace_back(-xHalfLength, yHalfLength, 0);
-    return PyContactSurface(position, rotation, p, mu, nrGenerators);
-}
-PyContactSurface PyRectangularSurface0(double xHalfLength, double yHalfLength, const Eigen::Vector3d& r_0_s, const Eigen::Matrix3d& E_0_s)
-{
-    return PyRectangularSurface(xHalfLength, yHalfLength, r_0_s, E_0_s);
-}
-PyContactSurface PyRectangularSurface1(double xHalfLength, double yHalfLength, const Eigen::Vector3d& r_0_s, const Eigen::Matrix3d& E_0_s, double mu)
-{
-    return PyRectangularSurface(xHalfLength, yHalfLength, r_0_s, E_0_s, mu);
-}
-
 struct python_list_to_std_vector_of_ContactSurface {
     python_list_to_std_vector_of_ContactSurface()
     {
-        py::converter::registry::push_back(&convertible, &construct, py::type_id<std::vector<PyContactSurface> >());
+        py::converter::registry::push_back(&convertible, &construct, py::type_id<std::vector<wcl::ContactSurface> >());
     }
 
     static void* convertible(PyObject* obj_ptr)
@@ -209,7 +163,7 @@ struct python_list_to_std_vector_of_ContactSurface {
 
         py::list arr = py::extract<py::list>(obj_ptr);
         for (long i = 0; i < py::len(arr); i++)
-            if (!py::extract<PyContactSurface>(arr[i]).check())
+            if (!py::extract<wcl::ContactSurface>(arr[i]).check())
                 return 0;
 
         return obj_ptr;
@@ -220,30 +174,59 @@ struct python_list_to_std_vector_of_ContactSurface {
         py::list list = py::extract<py::list>(obj_ptr);
         long len = py::len(list);
 
-        using storage_type = py::converter::rvalue_from_python_storage<std::vector<PyContactSurface> >;
+        using storage_type = py::converter::rvalue_from_python_storage<std::vector<wcl::ContactSurface> >;
         void* storage = reinterpret_cast<storage_type*>(data)->storage.bytes;
 
-        new (storage) std::vector<PyContactSurface>;
-        std::vector<PyContactSurface>& vec = *static_cast<std::vector<PyContactSurface>*>(storage);
+        new (storage) std::vector<wcl::ContactSurface>;
+        std::vector<wcl::ContactSurface>& vec = *static_cast<std::vector<wcl::ContactSurface>*>(storage);
 
         for (long i = 0; i < len; ++i)
-            vec.push_back(py::extract<PyContactSurface>(list[i]));
+            vec.push_back(py::extract<wcl::ContactSurface>(list[i]));
 
         data->convertible = storage;
     }
 };
 
 struct std_vector_of_ContactSurface_to_python_list {
-    static PyObject* convert(const std::vector<PyContactSurface>& vec)
+    static PyObject* convert(const std::vector<wcl::ContactSurface>& vec)
     {
         py::list list;
 
-        for (const PyContactSurface& cs : vec)
+        for (const wcl::ContactSurface& cs : vec)
             list.append(cs);
 
         return py::incref(list.ptr());
     }
 };
+
+namespace wcl {
+
+// rectangularSurface wrapper
+ContactSurface rectangularSurface0(double xHalfLength, double yHalfLength, const Eigen::Vector3d& r_0_s, const Eigen::Matrix3d& E_0_s)
+{
+    return rectangularSurface(xHalfLength, yHalfLength, r_0_s, E_0_s);
+}
+ContactSurface rectangularSurface1(double xHalfLength, double yHalfLength, const Eigen::Vector3d& r_0_s, const Eigen::Matrix3d& E_0_s, double mu)
+{
+    return rectangularSurface(xHalfLength, yHalfLength, r_0_s, E_0_s, mu);
+}
+
+// ContactSurface init function
+boost::shared_ptr<ContactSurface> initCS(const Eigen::Vector3d& pos, const Eigen::Matrix3d& rot,
+    const std::vector<Eigen::Vector3d>& p, double mu = 0.7, unsigned int nrG = 4)
+{
+    return boost::shared_ptr<ContactSurface>(new ContactSurface({ pos, rot, p, mu, nrG }));
+}
+boost::shared_ptr<ContactSurface> initCS0(const Eigen::Vector3d& pos, const Eigen::Matrix3d& rot,
+    const std::vector<Eigen::Vector3d>& p)
+{
+    return initCS(pos, rot, p);
+}
+boost::shared_ptr<ContactSurface> initCS1(const Eigen::Vector3d& pos, const Eigen::Matrix3d& rot,
+    const std::vector<Eigen::Vector3d>& p, double mu)
+{
+    return initCS(pos, rot, p, mu);
+}
 
 } // namespace wcl
 
@@ -278,28 +261,31 @@ BOOST_PYTHON_MODULE(WrenchConeLib)
     py::to_python_converter<std::vector<Eigen::Vector3d>, std_vector_of_eigen_Vector3d_to_python_list>();
 
     // ContactSurface
-    py::class_<PyContactSurface>("ContactSurface", doc_ContactSurface.c_str(),
-        py::init<Eigen::Vector3d, Eigen::Matrix3d, std::vector<Eigen::Vector3d>, py::optional<double, unsigned int> >(py::args("position", "rotation", "points", "mu", "nr_generators")))
-        .def_readwrite("mu", &PyContactSurface::mu, doc_mu.c_str())
-        .def_readwrite("nr_generators", &PyContactSurface::nrGenerators, doc_nrGenerators.c_str())
-        .add_property("position", &PyContactSurface::get_position, &PyContactSurface::set_position, doc_position.c_str())
-        .add_property("rotation", &PyContactSurface::get_rotation, &PyContactSurface::set_rotation, doc_rotation.c_str())
-        .add_property("points", &PyContactSurface::get_points, &PyContactSurface::set_points, doc_points.c_str());
+    py::class_<ContactSurface, boost::shared_ptr<ContactSurface> >("ContactSurface", doc_ContactSurface.c_str())
+        .def("__init__", py::make_constructor(initCS))
+        .def("__init__", py::make_constructor(initCS0))
+        .def("__init__", py::make_constructor(initCS1))
+        .def_readwrite("mu", &ContactSurface::mu, doc_mu.c_str())
+        .def_readwrite("nr_generators", &ContactSurface::nrGenerators, doc_nrGenerators.c_str())
+        .add_property("position", py::make_getter(&ContactSurface::position, py::return_value_policy<py::copy_non_const_reference>()),
+            py::make_setter(&ContactSurface::position), doc_position.c_str())
+        .add_property("rotation", py::make_getter(&ContactSurface::rotation, py::return_value_policy<py::copy_non_const_reference>()),
+            py::make_setter(&ContactSurface::rotation), doc_rotation.c_str())
+        .add_property("points", py::make_getter(&ContactSurface::points, py::return_value_policy<py::copy_non_const_reference>()),
+            py::make_setter(&ContactSurface::points), doc_points.c_str());
 
     // BOOST_PYTHON_FUNCTION_OVERLOADS(pySquareSurfacePoints_overloads, pySquareSurfacePoints, 4, 6) // Do not work and i don't know why
-    py::def("rectangular_surface", PyRectangularSurface0, py::args("x_half_length", "y_half_length", "position", "rotation"), doc_rectangularSurface.c_str());
-    py::def("rectangular_surface", PyRectangularSurface1, py::args("x_half_length", "y_half_length", "position", "rotation", "mu"), doc_rectangularSurface.c_str());
-    py::def("rectangular_surface", PyRectangularSurface, py::args("x_half_length", "y_half_length", "position", "rotation", "mu", "nr_generators"), doc_rectangularSurface.c_str());
+    py::def("rectangular_surface", rectangularSurface0, py::args("x_half_length", "y_half_length", "position", "rotation"), doc_rectangularSurface.c_str());
+    py::def("rectangular_surface", rectangularSurface1, py::args("x_half_length", "y_half_length", "position", "rotation", "mu"), doc_rectangularSurface.c_str());
+    py::def("rectangular_surface", rectangularSurface, py::args("x_half_length", "y_half_length", "position", "rotation", "mu", "nr_generators"), doc_rectangularSurface.c_str());
 
     // Conversion of std::vector<ContactSurface>
     python_list_to_std_vector_of_ContactSurface();
-    py::to_python_converter<std::vector<PyContactSurface>, std_vector_of_ContactSurface_to_python_list>();
+    py::to_python_converter<std::vector<ContactSurface>, std_vector_of_ContactSurface_to_python_list>();
 
     // WrenchCone
-    py::class_<PyWrenchCone>("WrenchCone", doc_WrenchCone.c_str(), py::init<Eigen::Vector3d, ContactSurface>(py::args("application_point", "contact_surface")))
-        .def(py::init<Eigen::Vector3d, std::vector<PyContactSurface> >(py::args("application_point", "list_of_contact_surfaces")))
+    py::class_<WrenchCone>("WrenchCone", doc_WrenchCone.c_str(), py::init<Eigen::Vector3d, ContactSurface>(py::args("application_point", "contact_surface")))
+        .def(py::init<Eigen::Vector3d, std::vector<ContactSurface> >(py::args("application_point", "list_of_contact_surfaces")))
         .def("get_rays", &WrenchCone::getRays, doc_getRays.c_str())
         .def("get_halfspaces", &WrenchCone::getHalfspaces, doc_getHalfspaces.c_str());
-
-    py::implicitly_convertible<PyContactSurface, ContactSurface>();
 }
