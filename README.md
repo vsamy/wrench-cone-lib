@@ -50,7 +50,7 @@ About authors
 wrench-cone-lib has been developped by following authors: 
 + Vincent Samy (LIRMM)
 
-Please contact Vincent Samy (vincent.samy@lirmm.fr) - LIRMM for more information or questions.
+Please contact Vincent Samy (vsamy@outlook.fr) - LIRMM for more information or questions.
 
 
 
