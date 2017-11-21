@@ -18,7 +18,7 @@ declare_PID_Package(
 			INSTITUTION		LIRMM
 			ADDRESS			git@github.com:vsamy/wrench-cone-lib.git
 			PUBLIC_ADDRESS	https://github.com/vsamy/wrench-cone-lib.git
-			MAIL			vincent.samy@lirmm.fr
+			MAIL			vsamy@outlook.fr
 			YEAR 			2017
 			LICENSE 		CeCILL-C
 			DESCRIPTION 	"This library implements the Contact Wrench Cone as given [here](https://scaron.info/papers/journal/caron-tro-2016.pdf). It uses cdd for the polyhedron computation and Eigen for the matrix part. Python bindings are also available."
