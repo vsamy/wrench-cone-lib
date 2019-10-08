@@ -18,6 +18,7 @@
 */
 #pragma once
 
+#include "wcl/api.h"
 #include <Eigen/Core>
 #include <vector>
 
@@ -26,7 +27,7 @@ namespace wcl {
 /** Representation of a contact surface
  * It handles all the needed information to compute the CWC.
  */
-struct ContactSurface {
+struct WCL_DLLAPI ContactSurface {
     Eigen::Vector3d position; /**< Position vector of the surface in the world coordinates */
     Eigen::Matrix3d rotation; /**< Rotation matrix of the surface from the world frame to the surface frame */
     std::vector<Eigen::Vector3d> points; /**< List of points belonging to the surface in the surface coordinates */
@@ -44,7 +45,7 @@ struct ContactSurface {
  * \param nrGenerators number of generators to approximate the friction cone
  * \return A squared ContactSurface
  */
-ContactSurface rectangularSurface(double xHalfLength, double yHalfLength, const Eigen::Vector3d& position,
+WCL_DLLAPI ContactSurface rectangularSurface(double xHalfLength, double yHalfLength, const Eigen::Vector3d& position,
     const Eigen::Matrix3d& rotation, double mu = 0.7, unsigned int nrGenerators = 4);
 
 } // namespace wcl

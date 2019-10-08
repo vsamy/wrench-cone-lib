@@ -1,36 +1,42 @@
-CMAKE_MINIMUM_REQUIRED(VERSION 3.0.2)
+cmake_minimum_required(VERSION 3.1.3)
 
-set(WORKSPACE_DIR ${CMAKE_SOURCE_DIR}/../.. CACHE PATH "root of the packages workspace directory")
-list(APPEND CMAKE_MODULE_PATH ${WORKSPACE_DIR}/share/cmake/system) # using generic scripts/modules of the workspace
-include(Package_Definition NO_POLICY_SCOPE)
+include(cmake/base.cmake)
+include(cmake/boost.cmake)
+include(cmake/msvc-specific.cmake)
 
-PROJECT(wrench-cone-lib)
+set(PROJECT_NAME wrench-cone-lib)
+set(PROJECT_DESCRIPTION "This library computes a Contact Wrench Cone using polyhedral presentation. ")
+set(PROJECT_URL "https://github.com/vsamy/wrench-cone-lib")
+set(PROJECT_DEBUG_POSTFIX "_d")
 
+set(INSTALL_GENERATED_HEADERS OFF)
+set(DOXYGEN_USE_MATHJAX "YES")
+
+option(BUILD_TESTING "Disable unit tests." ON)
+option(PYTHON_BINDING "Generate python bindings." OFF)
 option(PLUCKER_NOTATION "Plucker notation is used [ang lin], else the reverse is used [lin, ang]" OFF)
 
-set(COMPILER_DEFS "")
-if(${PLUCKER_NOTATION})
-	set(COMPILER_DEFS "PLUCKER_NOTATION")
+if(MSVC)
+    set(CMAKE_MSVCIDE_RUN_PATH "\$(SolutionDir)/src/\$(Configuration)")
+endif(MSVC)
+
+project(${PROJECT_NAME})
+setup_project()
+
+set(BOOST_REQUIRED 1.48)
+set(Eigen_REQUIRED "eigen3 >= 3.2.0")
+
+add_project_dependency("Eigen3 eigen-cdd" REQUIRED)
+
+add_subdirectory(src)
+
+if(NOT ${BUILD_TESTING})
+  add_subdirectory(tests)
 endif()
 
-declare_PID_Package(
-			AUTHOR 			Vincent Samy
-			INSTITUTION		LIRMM
-			ADDRESS			git@github.com:vsamy/wrench-cone-lib.git
-			PUBLIC_ADDRESS	https://github.com/vsamy/wrench-cone-lib.git
-			MAIL			vsamy@outlook.fr
-			YEAR 			2017
-			LICENSE 		CeCILL-C
-			DESCRIPTION 	"This library implements the Contact Wrench Cone as given [here](https://scaron.info/papers/journal/caron-tro-2016.pdf). It uses cdd for the polyhedron computation and Eigen for the matrix part. Python bindings are also available."
-			README 			readme.md
-)
+if(${PYTHON_BINDING})
+    add_subdirectory(binding/python)
+endif()
 
-set_PID_Package_Version(0 6 0)
-
-#now finding packages
-declare_PID_Package_Dependency(PACKAGE eigen EXTERNAL VERSION 3.3.4)
-declare_PID_Package_Dependency(PACKAGE eigen-cdd NATIVE VERSION 0.4.0)
-declare_PID_Package_Dependency(PACKAGE boost EXTERNAL VERSION 1.64.0)
-declare_PID_Package_Dependency(PACKAGE pygen-converter NATIVE VERSION 0.2)
-
-build_PID_Package()
+setup_project_finalize()
+setup_project_package_finalize()

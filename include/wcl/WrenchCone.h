@@ -18,7 +18,8 @@
 */
 #pragma once
 
-#include <wcl/ContactSurface.h>
+#include "wcl/api.h"
+#include "wcl/ContactSurface.h"
 #include <eigen-cdd/Polyhedron.h>
 #include <vector>
 
@@ -27,7 +28,7 @@ namespace wcl {
 /** CWC (Contact Wrench Cone) is the main class of this lib.
  * It computes the Contact Wrench Cone using 6D polyhedrons.
  */
-class WrenchCone {
+class WCL_DLLAPI WrenchCone {
 public:
     /** Constructor
      * \param applicationPoint The application point of the wrench

@@ -16,7 +16,7 @@
 *       along with this software. If not, it can be found on the official website
 *       of the CeCILL licenses family (http://www.cecill.info/index.en.html).
 */
-#include <wcl/ContactSurface.h>
+#include "wcl/ContactSurface.h"
 #include <vector>
 
 namespace wcl {
