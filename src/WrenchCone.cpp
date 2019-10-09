@@ -46,7 +46,7 @@ Eigen::MatrixXd WrenchCone::getRays()
 Eigen::MatrixXd WrenchCone::getHalfspaces()
 {
     computeG();
-    polyhedron_.hrep(G_.transpose(), Eigen::VectorXd::Zero(G_.cols()));
+    polyhedron_.setHrep(G_.transpose(), Eigen::VectorXd::Zero(G_.cols()));
     return polyhedron_.hrep().first;
 }
 
@@ -94,7 +94,7 @@ std::vector<Eigen::Vector3d> WrenchCone::generateCone(const ContactSurface& cp)
     Eigen::Vector3d gen = Eigen::AngleAxisd(angle, tan) * normal;
     double step = (M_PI * 2.) / cp.nrGenerators;
 
-    for (int i = 0; i < cp.nrGenerators; ++i) {
+    for (unsigned int i = 0; i < cp.nrGenerators; ++i) {
         generators[i] = cp.rotation.transpose() * Eigen::AngleAxisd(step * i, normal) * gen;
     }
 
