@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.12.4)
 include(cmake/base.cmake)
 include(cmake/msvc-specific.cmake)
 
-set(PROJECT_NAME wrench-cone-lib)
+set(PROJECT_NAME wcl)
 set(PROJECT_DESCRIPTION "This library computes a Contact Wrench Cone using polyhedral presentation. ")
 set(PROJECT_URL "https://github.com/vsamy/wrench-cone-lib")
 set(PROJECT_DEBUG_POSTFIX "_d")
