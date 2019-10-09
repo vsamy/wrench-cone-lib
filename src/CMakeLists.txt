@@ -1,11 +1,12 @@
 set(SOURCES
     ContactSurface.cpp
-    WrnechCone.cpp
+    WrenchCone.cpp
 )
 
 set(HEADERS
-    ContactSurface.h
-    WrnechCone.h
+    ../include/wcl/api.h
+    ../include/wcl/ContactSurface.h
+    ../include/wcl/WrenchCone.h
 )
 
 add_library(${PROJECT_NAME} SHARED ${SOURCES} ${HEADERS})
@@ -14,5 +15,5 @@ if(${PLUCKER_NOTATION})
     target_compile_definitions(${PROJECT_NAME} PUBLIC PLUCKER_NOTATION)
 endif()
 target_include_directories(${PROJECT_NAME} PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}> $<INSTALL_INTERFACE:include>)
-target_link_libraries(${PROJECT_NAME} PUBLIC eigen-cdd::eigen-cdd)
+target_link_libraries(${PROJECT_NAME} PUBLIC eigen-cdd::eigen-cdd pygen::pygen)
 target_include_directories(${PROJECT_NAME} SYSTEM PUBLIC "${EIGEN3_INCLUDE_DIR}") 

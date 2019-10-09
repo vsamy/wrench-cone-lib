@@ -1,29 +1,10 @@
+enable_testing()
 
-declare_PID_Component(
-    TEST_APPLICATION 
-    NAME test-wrench-cone-lib 
-    DIRECTORY wrench_cone_lib
-)
+find_package(Boost REQUIRED COMPONENTS unit_test_framework)
 
-declare_PID_Component_Dependency(
-    COMPONENT test-wrench-cone-lib 
-    NATIVE wrench-cone-lib
-)
+add_executable(wclTest TestWrenchConeLib.cpp)
+target_link_libraries(wclTest PRIVATE ${PROJECT_NAME} Boost::unit_test_framework)
+add_test(wclTestUnit wclTest)
+# Adding a project configuration file (for MSVC only)
+generate_msvc_dot_user_file(wclTest)
 
-declare_PID_Component_Dependency(
-    COMPONENT test-wrench-cone-lib 
-    EXTERNAL boost-utest 
-    PACKAGE boost
-)
-
-
-
-run_PID_Test(
-    NAME testing-wrench-cone-lib 
-    COMPONENT test-wrench-cone-lib
-)
-
-run_PID_Test(
-    NAME testing-python-wrapper 
-    PYTHON ARGUMENTS pyWrenchConeLib/TestPyWrenchConeLib.py
-)
