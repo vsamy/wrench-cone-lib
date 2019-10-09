@@ -69,7 +69,7 @@ void computeRaysPerf()
     auto res = std::minmax_element(timings.begin(), timings.end());
     std::cout << "Worst of " << NUMBER_OF_TESTS << ": " << *res.second << "µs" << std::endl;
     std::cout << "Best of " << NUMBER_OF_TESTS << ": " << *res.first << "µs" << std::endl;
-    auto acc = std::accumulate(timings.begin(), timings.end(), 0);
+    auto acc = std::accumulate(timings.begin(), timings.end(), size_t(0));
     std::cout << "Mean of " << NUMBER_OF_TESTS << ": " << acc / NUMBER_OF_TESTS << "µs" << std::endl;
 }
 
@@ -93,7 +93,7 @@ void computeHalfspacesPerf()
     }
 
     auto res = std::minmax_element(timings.begin(), timings.end());
-    auto acc = std::accumulate(timings.begin(), timings.end(), 0);
+    auto acc = std::accumulate(timings.begin(), timings.end(), size_t(0));
     std::cout << std::endl << "Halfspaces computation time" << std::endl;
     std::cout << "Worst of " << NUMBER_OF_TESTS << ": " << *res.second << "µs" << std::endl;
     std::cout << "Best of " << NUMBER_OF_TESTS << ": " << *res.first << "µs" << std::endl;

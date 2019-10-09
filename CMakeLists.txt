@@ -12,6 +12,7 @@ set(INSTALL_GENERATED_HEADERS OFF CACHE BOOL "Generate and install standard head
 set(DOXYGEN_USE_MATHJAX "YES")
 
 option(BUILD_TESTING "Disable unit tests." ON)
+option(BUILD_EXAMPLES "Build examples." OFF)
 option(BUILD_TEST_STATIC_BOOST "Build unit tests with static boost libraries" OFF)
 option(PYTHON_BINDING "Generate python bindings." OFF)
 option(PLUCKER_NOTATION "Plucker notation is used [ang lin], else the reverse is used [lin, ang]" OFF)
@@ -27,11 +28,15 @@ add_project_dependency(eigen-cdd REQUIRED)
 add_subdirectory(src)
 
 if(NOT ${BUILD_TESTING})
-  add_subdirectory(tests)
+    add_subdirectory(tests)
 endif()
 
 if(${PYTHON_BINDING})
     add_subdirectory(binding/python)
+endif()
+
+if(${BUILD_EXAMPLES})
+    add_subdirectory(examples)
 endif()
 
 setup_project_finalize()
