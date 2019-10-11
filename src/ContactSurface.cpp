@@ -24,12 +24,16 @@ namespace wcl {
 wcl::ContactSurface rectangularSurface(double xHalfLength, double yHalfLength, const Eigen::Vector3d& position,
     const Eigen::Matrix3d& rotation, double mu, unsigned int nrGenerators)
 {
-    std::vector<Eigen::Vector3d> p;
-    p.emplace_back(xHalfLength, yHalfLength, 0);
-    p.emplace_back(xHalfLength, -yHalfLength, 0);
-    p.emplace_back(-xHalfLength, -yHalfLength, 0);
-    p.emplace_back(-xHalfLength, yHalfLength, 0);
-    return wcl::ContactSurface({position, rotation, p, mu, nrGenerators});
+    wcl::ContactSurface cs;
+    cs.points.emplace_back(xHalfLength, yHalfLength, 0);
+    cs.points.emplace_back(xHalfLength, -yHalfLength, 0);
+    cs.points.emplace_back(-xHalfLength, -yHalfLength, 0);
+    cs.points.emplace_back(-xHalfLength, yHalfLength, 0);
+    cs.position = position;
+    cs.rotation = rotation;
+    cs.mu = mu;
+    cs.nrGenerators = nrGenerators;
+    return cs;
 }
 
 } // namespace wcl

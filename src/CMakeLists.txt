@@ -11,7 +11,9 @@ set(HEADERS
 
 add_library(${PROJECT_NAME} SHARED ${SOURCES} ${HEADERS})
 set_target_properties(${PROJECT_NAME} PROPERTIES COMPILE_FLAGS "-Dwcl_EXPORTS")
-target_compile_definitions(${PROJECT_NAME} PUBLIC _USE_MATH_DEFINES)
+if (MSVC)
+    target_compile_definitions(${PROJECT_NAME} PUBLIC _USE_MATH_DEFINES)
+endif()
 if(${PLUCKER_NOTATION})
     target_compile_definitions(${PROJECT_NAME} PUBLIC PLUCKER_NOTATION)
 endif()
