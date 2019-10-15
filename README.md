@@ -1,6 +1,5 @@
 
-Overview
-=========
+# Overview
 
 This library implements the Contact Wrench Cone as given [here](https://scaron.info/papers/journal/caron-tro-2016.pdf). It uses cdd for the polyhedron computation and Eigen for the matrix part. Python bindings are also available.
 
@@ -39,8 +38,7 @@ sudo apt-get update; sudo apt-get install python-pip python3-pip
 sudo pip install numpy; sudo pip3 install numpy
 ```
 
-
-### Testing
+## Testing
 
 ```sh
 cd wrench-cone-lib/build
